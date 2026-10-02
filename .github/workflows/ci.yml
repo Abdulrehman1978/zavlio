@@ -1,0 +1,53 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 11.19.0, run_install: false }
+      - uses: actions/setup-node@v4
+        with: { node-version-file: .node-version, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm format:check
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test:unit
+      - run: pnpm test:security:redaction
+      - run: pnpm security:scan
+      - run: pnpm env:check test
+      - run: pnpm test:integration:meta-adapter
+      - run: pnpm test:integration:social-provider
+      - run: pnpm meta:verify-pin
+      - run: pnpm build
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e
+  database:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with: { version: 11.19.0, run_install: false }
+      - uses: actions/setup-node@v4
+        with: { node-version-file: .node-version, cache: pnpm }
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm db:start
+      - run: pnpm db:reset
+      - run: pnpm db:lint
+      - run: pnpm db:test
+      - run: pnpm db:types
+      - shell: bash
+        run: |
+          first_hash=$(sha256sum packages/db/src/generated/database.types.ts | cut -d' ' -f1)
+          pnpm db:types
+          second_hash=$(sha256sum packages/db/src/generated/database.types.ts | cut -d' ' -f1)
+          test "$first_hash" = "$second_hash"
+          git diff --exit-code -- packages/db/src/generated/database.types.ts

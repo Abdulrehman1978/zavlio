@@ -1,0 +1,17 @@
+begin;
+select plan(13);
+select has_function('public', 'current_staff_id', 'current_staff_id helper exists');
+select has_function('public', 'current_staff_role', 'current_staff_role helper exists');
+select has_function('public', 'is_active_staff', 'is_active_staff helper exists');
+select has_function('public', 'has_staff_role', 'has_staff_role helper exists');
+select ok((select relrowsecurity from pg_class where oid = 'public.staff_profiles'::regclass), 'staff profiles keep RLS enabled');
+select ok((select relrowsecurity from pg_class where oid = 'public.audit_logs'::regclass), 'audit logs keep RLS enabled');
+select ok((select count(*) from pg_policies where schemaname = 'public' and tablename = 'staff_profiles') >= 4, 'staff profile policies cover read, insert, and role-scoped update');
+select ok((select count(*) from pg_trigger where tgrelid = 'public.staff_profiles'::regclass and tgname = 'staff_profiles_last_owner_guard') = 1, 'last active owner guard trigger exists');
+select has_function('public', 'ensure_analytics_session', ARRAY['uuid', 'timestamp with time zone', 'interval', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text', 'text'], 'analytics session initializer exists');
+select has_column('public', 'consents', 'consent_key', 'consent preference key exists');
+select has_column('public', 'sessions', 'last_activity_at', 'session activity timestamp exists');
+select has_index('public', 'events', 'events_session_occurred_idx', 'event chronology index exists');
+select ok((select relrowsecurity from pg_class where oid = 'public.events'::regclass), 'events keep RLS enabled');
+select * from finish();
+rollback;

@@ -1,0 +1,23 @@
+{
+  "repository": "https://github.com/sunmughan/meta-automation.git",
+  "repositoryFullName": "sunmughan/meta-automation",
+  "observedBranch": "agentic-social-v2",
+  "commit": "439c3bfaacb1caabef25a7d67c3f204916a5a168",
+  "tree": "e4f412bc7ff86261f0753a1f088c5f271af9246c",
+  "commitMessage": "feat: complete multi-OS onboarding upgrades and resilient Android headless execution",
+  "commitAuthorTimestamp": "2026-09-29T17:46:51Z",
+  "commitVerification": "UNSIGNED",
+  "license": "MIT",
+  "package": "meta-automation",
+  "packageVersion": "2.0.0",
+  "nodeEngine": ">=18.0.0",
+  "pinnedAt": "2026-10-01",
+  "pinnedBy": "Packet 15",
+  "sourceStrategy": "detached-git-checkout",
+  "packageLockSha256": "3e7077977e388545f13477df76f45b5ce790ca462fc59f788948cd87a9a9ce7a",
+  "licenseSha256": "019f2f0ac85865074aa19049fd46da9423906400216dbb854b68e892fae99153",
+  "readmeSha256": "c474d10a717564b8d4fe8945435f812ec460052675e5b0c4fc3f077093039cba",
+  "lockedPuppeteerCore": "25.11.0",
+  "runtimeWritePolicy": "isolated-runtime-only",
+  "upstreamSourceMustRemainUnmodified": true
+}

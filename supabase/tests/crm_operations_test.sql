@@ -1,0 +1,16 @@
+begin;
+select plan(12);
+select has_table('public', 'person_merges', 'merge provenance table exists');
+select has_column('public', 'people', 'merged_into_person_id', 'canonical merge pointer exists');
+select has_column('public', 'people', 'merged_at', 'merge timestamp exists');
+select has_column('public', 'people', 'merged_by', 'merge actor exists');
+select has_view('public', 'crm_people_projection', 'people projection view exists');
+select has_function('public', 'resolve_canonical_person_id', ARRAY['uuid'], 'canonical resolver exists');
+select has_function('public', 'merge_people', ARRAY['uuid','uuid','uuid','text'], 'transactional merge function exists');
+select has_function('public', 'crm_person_timeline', ARRAY['uuid','timestamp with time zone','uuid','text','integer'], 'bounded timeline function exists');
+select has_function('public', 'record_crm_audit', ARRAY['text','text','uuid','jsonb','jsonb'], 'actor-bound audit function exists');
+select ok((select relrowsecurity from pg_class where oid = 'public.person_merges'::regclass), 'merge provenance keeps RLS enabled');
+select ok((select count(*) from pg_policies where schemaname = 'public' and tablename = 'identity_match_candidates' and policyname = 'identity_match_candidates_admin_update') = 1, 'candidate mutation is admin-only');
+select ok((select count(*) from pg_indexes where schemaname = 'public' and indexname = 'people_name_lower_idx') = 1, 'people name search index exists');
+select * from finish();
+rollback;

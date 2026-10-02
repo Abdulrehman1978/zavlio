@@ -1,0 +1,19 @@
+{
+  "name": "@zavlio/email",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "6.0.3"
+  },
+  "dependencies": {
+    "@types/nodemailer": "^8.0.2",
+    "nodemailer": "^10.0.10"
+  }
+}

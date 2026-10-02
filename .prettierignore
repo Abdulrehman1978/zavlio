@@ -1,0 +1,11 @@
+.next
+coverage
+dist
+node_modules
+playwright-report
+test-results
+external/meta-automation
+pnpm-lock.yaml
+MASTER_SPEC.md
+apps/web/next-env.d.ts
+packages/db/src/generated/database.types.ts
