@@ -1,11 +1,11 @@
 # Progress Tracker
 
-Packet 17 closes the local backend/platform engineering work with
-PASS_WITH_EXTERNAL_DEPENDENCY. Database release gate is promoted to
-PASS_WITH_EXTERNAL_DEPENDENCY following resolution of all internal regressions
-and execution of the full verification suite (pgTAP 175/175, 18/18 Playwright E2E,
-and Packet 08–14 runtimes). Packet 18 is NOT_STARTED and must not begin
-automatically without user approval.
+Release Baseline COMPLETE as of 2026-10-02.
+Commit `d632dc55bae9a4c7b9f936a79fff8296709e4d3d` pushed to `main` on
+`https://github.com/Abdulrehman1978/zavlio.git`. All pre-push gates, runtime
+integration suites, Playwright E2E, and security scans pass. Database release
+gate: VERIFIED. Overall: PASS_WITH_EXTERNAL_DEPENDENCY. Packet 18 is
+NOT_STARTED.
 
 | Packet                              | Status                        | Evidence / note                                                                                                                                                                                                               | Next gate                               |
 | ----------------------------------- | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
@@ -30,9 +30,15 @@ automatically without user approval.
 | 16 — Controlled social integration  | PASS_WITH_EXTERNAL_DEPENDENCY | docs/work/16-result.md; isolated providers, signed observation boundary, CRM conversation UI, synthetic identity/dedupe/canary evidence                                                                                       | Review gate; Packet 17 remains unopened |
 | 17 — Backend/platform closure       | PASS_WITH_EXTERNAL_DEPENDENCY | docs/work/17-result.md; local release controls pass, Docker/Postgres and hosted gates remain external; database release gate NOT VERIFIED                                                                                     | Packet 17R verification                 |
 | 17R — Database release verification | PASS_WITH_EXTERNAL_DEPENDENCY | docs/work/17R-result.md, docs/work/17R1-result.md; clean 20-migration replay, zero lint errors, 0 type drift, 175/175 pgTAP tests passed, Packet 08–14 runtimes passed, 18/18 Playwright E2E passed; DB gate promoted locally | Review gate; pause for user approval    |
+| RELEASE BASELINE                    | COMPLETE                      | Commit d632dc55bae9a4c7b9f936a79fff8296709e4d3d; all pre-push gates + runtime suites + E2E + 43/43 manual QA PASS; pushed to https://github.com/Abdulrehman1978/zavlio.git main | Stop; await user approval for Packet 18 |
 | 18–20                               | NOT_STARTED                   | Packet 18 remains unopened; return only after user review of Packet 17R resolution and authorization                                                                                                                          | Explicit review gate                    |
 
-Approved execution is complete through Packet 17R resolution.
-Database release gate is PASS_WITH_EXTERNAL_DEPENDENCY with all internal
-tests passing; hosted services/deployment configuration remain external.
-Stop here; do not start Packet 18.
+Approved execution is complete through the Release Baseline phase.
+
+- Local Database Release Gate: VERIFIED
+- Overall Production Readiness: PASS_WITH_EXTERNAL_DEPENDENCY
+- Verified git commit: d632dc55bae9a4c7b9f936a79fff8296709e4d3d on main
+- Remote SHA confirmed: matches https://github.com/Abdulrehman1978/zavlio.git
+
+Stop here; do not start Packet 18 or deferred visual packets 02–05 without
+explicit user authorization.
