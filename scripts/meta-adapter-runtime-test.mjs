@@ -203,12 +203,21 @@ try {
       '--disable-gpu',
       '--no-first-run',
       '--no-default-browser-check',
+      '--disable-dev-shm-usage',
+      '--no-sandbox',
+      '--disable-setuid-sandbox',
       `--remote-debugging-port=${cdpPort}`,
       `--user-data-dir=${userData}`,
       initialUrl,
     ],
-    { stdio: 'ignore', windowsHide: true },
+    {
+      stdio: ['ignore', 'ignore', 'pipe'],
+      windowsHide: true,
+    },
   );
+  browserProcess.stderr.on('data', (chunk) => {
+    process.stderr.write('[meta-adapter-browser] ' + chunk);
+  });
   await waitForCdp(cdpPort);
   const requireUpstream = createRequire(join(upstreamRoot, 'package.json'));
   const puppeteer = requireUpstream('puppeteer-core');
