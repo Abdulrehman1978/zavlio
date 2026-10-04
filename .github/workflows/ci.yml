@@ -23,10 +23,10 @@ jobs:
       - run: pnpm test:security:redaction
       - run: pnpm security:scan
       - run: pnpm env:check test
+      - run: pnpm build
       - run: pnpm test:integration:meta-adapter
       - run: pnpm test:integration:social-provider
       - run: pnpm meta:verify-pin
-      - run: pnpm build
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm test:e2e
   database:
