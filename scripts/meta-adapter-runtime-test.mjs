@@ -17,7 +17,8 @@ import {
 
 const root = resolve(process.cwd());
 const upstreamRoot = resolve(root, 'external/meta-automation');
-const chrome = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
+const rootRequire = createRequire(import.meta.url);
+const chrome = process.env.CHROME_PATH ?? rootRequire('@playwright/test').chromium.executablePath();
 const checks = [];
 const check = (name, ok, detail = '') => {
   checks.push({ name, ok: Boolean(ok), detail });
@@ -209,8 +210,8 @@ try {
     { stdio: 'ignore', windowsHide: true },
   );
   await waitForCdp(cdpPort);
-  const require = createRequire(join(upstreamRoot, 'package.json'));
-  const puppeteer = require('puppeteer-core');
+  const requireUpstream = createRequire(join(upstreamRoot, 'package.json'));
+  const puppeteer = requireUpstream('puppeteer-core');
   browser = await puppeteer.connect({ browserURL: `http://127.0.0.1:${cdpPort}` });
   runtimeDir = await mkdtemp(join(tmpdir(), 'zavlio-meta-adapter-runtime-'));
 
