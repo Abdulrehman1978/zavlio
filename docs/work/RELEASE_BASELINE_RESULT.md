@@ -16,37 +16,37 @@
 
 ## Pre-Push Gate Matrix (all PASS)
 
-| Suite | Command | Result |
-|:------|:--------|:------:|
-| Format check | pnpm format:check | PASS (0 violations) |
-| ESLint | pnpm lint | PASS (0 warnings, 0 errors) |
-| TypeScript strict | pnpm typecheck | PASS (10 workspace packages) |
-| Unit tests | pnpm test:unit | PASS (89/89 tests) |
-| Production build | pnpm build | PASS (25 Next.js 16.3.6 routes) |
-| DB migration replay | pnpm db:reset | PASS (20 migrations) |
-| DB schema lint | pnpm db:lint | PASS |
-| pgTAP tests | pnpm db:test | PASS (175/175, 10 SQL files) |
-| Generated types | pnpm db:types x2 | PASS (0 drift, two-pass stable) |
-| Secret scanner | pnpm security:scan | PASS (523 files, 0 secrets) |
-| Log redaction | pnpm test:security:redaction | PASS (6 cases) |
-| Meta pin | pnpm meta:verify-pin | PASS (commit 439c3bf...) |
-| Dependency audit | pnpm audit --audit-level high | PASS (no high-severity vulns) |
+| Suite               | Command                       |             Result              |
+| :------------------ | :---------------------------- | :-----------------------------: |
+| Format check        | pnpm format:check             |       PASS (0 violations)       |
+| ESLint              | pnpm lint                     |   PASS (0 warnings, 0 errors)   |
+| TypeScript strict   | pnpm typecheck                |  PASS (10 workspace packages)   |
+| Unit tests          | pnpm test:unit                |       PASS (89/89 tests)        |
+| Production build    | pnpm build                    | PASS (25 Next.js 16.3.6 routes) |
+| DB migration replay | pnpm db:reset                 |      PASS (20 migrations)       |
+| DB schema lint      | pnpm db:lint                  |              PASS               |
+| pgTAP tests         | pnpm db:test                  |  PASS (175/175, 10 SQL files)   |
+| Generated types     | pnpm db:types x2              | PASS (0 drift, two-pass stable) |
+| Secret scanner      | pnpm security:scan            |   PASS (523 files, 0 secrets)   |
+| Log redaction       | pnpm test:security:redaction  |         PASS (6 cases)          |
+| Meta pin            | pnpm meta:verify-pin          |    PASS (commit 439c3bf...)     |
+| Dependency audit    | pnpm audit --audit-level high |  PASS (no high-severity vulns)  |
 
 ## Runtime Integration Suite (all PASS)
 
-| Suite | Result | Detail |
-|:------|:------:|:-------|
-| Analytics | PASS | Consent gating, attribution, session, dedupe |
-| Lead Intake | PASS | Idempotency, Mailpit delivery, honeypot |
-| CRM Operations | PASS | Role matrix, merge, DNC, audit timeline |
-| Operations | PASS | Scoring, pipeline, tasks, concurrency |
-| Reporting | PASS | Golden metrics (5 people, 10 visitors, 12 sessions) |
-| Automation | PASS | 22 checks, DNC/consent blocking, dry-run |
-| Meta Bridge | PASS | 51 checks, 11 hostile cases, signed lifecycle |
-| Meta Adapter | PASS | 54 checks, process isolation, CDP verification |
-| Social Provider | PASS | 31 checks, 0 real external side effects |
-| E2E + a11y | PASS | 18/18 Playwright tests, axe accessibility |
-| Manual Browser QA | PASS | 43/43 entries across all roles and viewports |
+| Suite             | Result | Detail                                              |
+| :---------------- | :----: | :-------------------------------------------------- |
+| Analytics         |  PASS  | Consent gating, attribution, session, dedupe        |
+| Lead Intake       |  PASS  | Idempotency, Mailpit delivery, honeypot             |
+| CRM Operations    |  PASS  | Role matrix, merge, DNC, audit timeline             |
+| Operations        |  PASS  | Scoring, pipeline, tasks, concurrency               |
+| Reporting         |  PASS  | Golden metrics (5 people, 10 visitors, 12 sessions) |
+| Automation        |  PASS  | 22 checks, DNC/consent blocking, dry-run            |
+| Meta Bridge       |  PASS  | 51 checks, 11 hostile cases, signed lifecycle       |
+| Meta Adapter      |  PASS  | 54 checks, process isolation, CDP verification      |
+| Social Provider   |  PASS  | 31 checks, 0 real external side effects             |
+| E2E + a11y        |  PASS  | 18/18 Playwright tests, axe accessibility           |
+| Manual Browser QA |  PASS  | 43/43 entries across all roles and viewports        |
 
 ## Security Pre-flight (all clear)
 
