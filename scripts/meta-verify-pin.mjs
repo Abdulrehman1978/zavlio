@@ -30,10 +30,10 @@ const repository = git('remote', 'get-url', 'origin');
 const commit = git('rev-parse', 'HEAD');
 const tree = git('rev-parse', 'HEAD^{tree}');
 const sourceStatus = git('status', '--porcelain', '--untracked-files=all');
-const sha256 = (file) =>
-  createHash('sha256')
-    .update(readFileSync(resolve(upstream, file)))
-    .digest('hex');
+const sha256 = (file) => {
+  const text = readFileSync(resolve(upstream, file), 'utf8').replace(/\r?\n/g, '\r\n');
+  return createHash('sha256').update(text).digest('hex');
+};
 const checks = {
   repository: repository.ok && repository.value === manifest.repository,
   commit: commit.ok && commit.value === manifest.commit,

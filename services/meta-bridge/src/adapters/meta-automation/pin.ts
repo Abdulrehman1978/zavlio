@@ -16,7 +16,8 @@ export type PinVerification = Readonly<{
   reason?: string;
 }>;
 
-const sha256 = (path: string) => createHash('sha256').update(readFileSync(path)).digest('hex');
+const sha256 = (path: string) =>
+  createHash('sha256').update(readFileSync(path, 'utf8').replace(/\r?\n/g, '\r\n')).digest('hex');
 const git = (root: string, args: string[]) =>
   spawnSync('git', ['-C', root, ...args], { encoding: 'utf8', windowsHide: true });
 
