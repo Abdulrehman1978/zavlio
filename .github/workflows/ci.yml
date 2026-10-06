@@ -25,6 +25,8 @@ jobs:
       - run: pnpm env:check test
       - run: pnpm build
       - run: pnpm exec playwright install --with-deps chromium
+      - name: Install pinned adapter runtime dependencies
+        run: npm install --prefix external/meta-automation --ignore-scripts --no-audit --no-fund
       - run: pnpm test:integration:meta-adapter
       - run: pnpm test:integration:social-provider
       - run: pnpm meta:verify-pin
