@@ -16,6 +16,10 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version-file: .node-version, cache: pnpm }
       - run: pnpm install --frozen-lockfile
+      - name: Fetch pinned Meta Automation source
+        run: |
+          git clone https://github.com/sunmughan/meta-automation.git external/meta-automation
+          git -C external/meta-automation checkout --detach 439c3bfaacb1caabef25a7d67c3f204916a5a168
       - run: pnpm format:check
       - run: pnpm lint
       - run: pnpm typecheck
