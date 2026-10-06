@@ -34,9 +34,13 @@ jobs:
         run: |
           npm ci --ignore-scripts --no-audit --no-fund --package-lock=false
           git checkout -- package-lock.json
+      - name: Verify pinned Meta Automation source
+        run: |
+          git -C external/meta-automation status --porcelain --untracked-files=all
+          sha256sum external/meta-automation/package-lock.json
+          pnpm meta:verify-pin
       - run: pnpm test:integration:meta-adapter
       - run: pnpm test:integration:social-provider
-      - run: pnpm meta:verify-pin
       - run: pnpm test:e2e
   database:
     runs-on: ubuntu-latest
