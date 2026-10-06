@@ -19,7 +19,9 @@ jobs:
       - name: Fetch pinned Meta Automation source
         run: |
           git clone https://github.com/sunmughan/meta-automation.git external/meta-automation
+          git -C external/meta-automation config core.autocrlf true
           git -C external/meta-automation checkout --detach 439c3bfaacb1caabef25a7d67c3f204916a5a168
+          git -C external/meta-automation checkout-index --all --force
       - run: pnpm format:check
       - run: pnpm lint
       - run: pnpm typecheck
@@ -33,7 +35,7 @@ jobs:
         working-directory: external/meta-automation
         run: |
           npm ci --ignore-scripts --no-audit --no-fund --package-lock=false
-          git checkout -- package-lock.json
+          git checkout-index --all --force
       - name: Verify pinned Meta Automation source
         run: |
           git -C external/meta-automation status --porcelain --untracked-files=all
