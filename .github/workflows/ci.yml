@@ -31,7 +31,9 @@ jobs:
       - run: pnpm exec playwright install --with-deps chromium
       - name: Install pinned adapter runtime dependencies
         working-directory: external/meta-automation
-        run: npm ci --ignore-scripts --no-audit --no-fund --package-lock=false
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund --package-lock=false
+          git checkout -- package-lock.json
       - run: pnpm test:integration:meta-adapter
       - run: pnpm test:integration:social-provider
       - run: pnpm meta:verify-pin
