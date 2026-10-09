@@ -14,7 +14,7 @@ Packet 17 is an operational closure record, not a claim that every hosted depend
 Hosted Supabase Auth, production SMTP, production Turnstile, selected deployment
 provider, production observability, distributed public rate limiting, and
 authenticated social accounts remain external. GitHub Actions run
-[37892264117](https://github.com/Abdulrehman1978/zavlio/actions/runs/37892264117)
+[37892760969](https://github.com/Abdulrehman1978/zavlio/actions/runs/37892760969)
 passed both the database release job and the database-backed E2E/axe job using
 ephemeral Supabase. No hosted production credentials or live social accounts
 were used.
@@ -26,7 +26,7 @@ Demo content in production, test credentials, Mailpit, synthetic social provider
 ## Release decision
 
 Packet 17R verification is closed for the committed baseline. GitHub Actions
-run 37892264117 passed verify and database; the database job passed clean
+run 37892760969 passed verify and database; the database job passed clean
 startup/reset, migration replay, schema lint, pgTAP, and deterministic generated
 types, while verify passed the pinned adapter/provider checks and 18/18
 database-backed Playwright/axe tests. DATABASE RELEASE GATE = VERIFIED.

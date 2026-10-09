@@ -5,7 +5,7 @@
 - Commit: 6ab81b9d720b9abfac692ab6b7afcdd15e796b53
 - Branch: main
 - Remote: https://github.com/Abdulrehman1978/zavlio.git
-- Remote SHA confirmed: 6ab81b9d720b9abfac692ab6b7afcdd15e796b53 (matches local HEAD)
+- Baseline SHA confirmed on `main`: 6ab81b9d720b9abfac692ab6b7afcdd15e796b53 (documentation-only closure commits follow)
 - Commit message: chore: close release baseline CI verification
 - Date: 2026-10-09
 
@@ -16,11 +16,11 @@
 
 ## Final GitHub CI Closure
 
-- Workflow run: [37892264117](https://github.com/Abdulrehman1978/zavlio/actions/runs/37892264117)
-- `verify`: PASS ([job 113695590737](https://github.com/Abdulrehman1978/zavlio/actions/runs/37892264117/job/113695590737))
-- `database`: PASS ([job 113695590996](https://github.com/Abdulrehman1978/zavlio/actions/runs/37892264117/job/113695590996))
+- Workflow run: [37892760969](https://github.com/Abdulrehman1978/zavlio/actions/runs/37892760969)
+- `verify`: PASS ([job 113697144660](https://github.com/Abdulrehman1978/zavlio/actions/runs/37892760969/job/113697144660))
+- `database`: PASS ([job 113697145003](https://github.com/Abdulrehman1978/zavlio/actions/runs/37892760969/job/113697145003))
 - Both jobs completed successfully on 2026-10-09. The verify job included the pinned adapter, social-provider checks, ephemeral Supabase start/reset, and 18/18 Playwright E2E + axe tests. The database job completed clean startup/reset, migrations, lint, pgTAP, and deterministic generated-type verification.
-- GitHub push: PASS; `origin/main` matches local HEAD at `6ab81b9d720b9abfac692ab6b7afcdd15e796b53`.
+- GitHub push: PASS; `origin/main` contains the baseline SHA and its documentation-only closure commits.
 
 ## Pre-Push Gate Matrix (all PASS)
 
@@ -53,7 +53,7 @@
 | Meta Bridge       |  PASS  | 51 checks, 11 hostile cases, signed lifecycle                         |
 | Meta Adapter      |  PASS  | 54 checks, process isolation, CDP verification                        |
 | Social Provider   |  PASS  | 31 checks, 0 real external side effects                               |
-| E2E + a11y        |  PASS  | 18/18 Playwright tests, axe accessibility (GitHub CI run 37892264117) |
+| E2E + a11y        |  PASS  | 18/18 Playwright tests, axe accessibility (GitHub CI run 37892760969) |
 | Manual Browser QA |  PASS  | 43/43 entries across all roles and viewports                          |
 
 ## Security Pre-flight (all clear)
