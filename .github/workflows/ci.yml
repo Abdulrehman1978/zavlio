@@ -43,6 +43,23 @@ jobs:
           pnpm meta:verify-pin
       - run: pnpm test:integration:meta-adapter
       - run: pnpm test:integration:social-provider
+      - name: Start Supabase for database-backed E2E
+        run: pnpm db:start
+      - name: Reset Supabase for database-backed E2E
+        run: pnpm db:reset
+      - name: Export local Supabase E2E credentials
+        shell: bash
+        run: |
+          supabase_env="$(pnpm exec supabase status -o env)"
+          get_value() {
+            printf '%s\n' "$supabase_env" | sed -n "s/^$1=//p" | sed 's/^"//;s/"$//'
+          }
+          {
+            echo "NEXT_PUBLIC_SUPABASE_URL=$(get_value API_URL)"
+            echo "NEXT_PUBLIC_SUPABASE_ANON_KEY=$(get_value ANON_KEY)"
+            echo "SUPABASE_SERVICE_ROLE_KEY=$(get_value SERVICE_ROLE_KEY)"
+            echo "SUPABASE_JWT_SECRET=$(get_value JWT_SECRET)"
+          } >> "$GITHUB_ENV"
       - run: pnpm test:e2e
   database:
     runs-on: ubuntu-latest
