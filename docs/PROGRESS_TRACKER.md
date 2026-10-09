@@ -1,9 +1,9 @@
 # Progress Tracker
 
 Release Baseline COMPLETE as of 2026-10-09.
-Commit `1737a4a6f3fac5f4a7e7121d84088ec546f001f3` pushed to `main` on
+Commit `6ab81b9d720b9abfac692ab6b7afcdd15e796b53` pushed to `main` on
 `https://github.com/Abdulrehman1978/zavlio.git`. GitHub Actions run
-`37890936080` passed both `verify` and `database`, including the
+`37892264117` passed both `verify` and `database`, including the
 database-backed Playwright/axe suite. Database release gate: VERIFIED.
 Overall: PASS_WITH_EXTERNAL_DEPENDENCY. Packet 18 is NOT_STARTED.
 
@@ -30,14 +30,14 @@ Overall: PASS_WITH_EXTERNAL_DEPENDENCY. Packet 18 is NOT_STARTED.
 | 16 — Controlled social integration  | PASS_WITH_EXTERNAL_DEPENDENCY | docs/work/16-result.md; isolated providers, signed observation boundary, CRM conversation UI, synthetic identity/dedupe/canary evidence                                                                                                     | Review gate; Packet 17 remains unopened |
 | 17 — Backend/platform closure       | PASS_WITH_EXTERNAL_DEPENDENCY | docs/work/17-result.md; local release controls pass, Docker/Postgres and hosted gates remain external; database release gate NOT VERIFIED                                                                                                   | Packet 17R verification                 |
 | 17R — Database release verification | PASS_WITH_EXTERNAL_DEPENDENCY | docs/work/17R-result.md, docs/work/17R1-result.md; clean 20-migration replay, zero lint errors, 0 type drift, 175/175 pgTAP tests passed, Packet 08–14 runtimes passed, 18/18 Playwright E2E passed; DB gate promoted locally               | Review gate; pause for user approval    |
-| RELEASE BASELINE                    | COMPLETE                      | Commit 1737a4a6f3fac5f4a7e7121d84088ec546f001f3; GitHub Actions 37890936080 verify + database PASS; all local engineering gates + runtime suites + E2E + 43/43 manual QA PASS; pushed to https://github.com/Abdulrehman1978/zavlio.git main | Stop; await user approval for Packet 18 |
+| RELEASE BASELINE                    | COMPLETE                      | Commit 6ab81b9d720b9abfac692ab6b7afcdd15e796b53; GitHub Actions 37892264117 verify + database PASS; all local engineering gates + runtime suites + E2E + 43/43 manual QA PASS; pushed to https://github.com/Abdulrehman1978/zavlio.git main | Stop; await user approval for Packet 18 |
 | 18–20                               | NOT_STARTED                   | Packet 18 remains unopened; return only after user review of Packet 17R resolution and authorization                                                                                                                                        | Explicit review gate                    |
 
 Approved execution is complete through the Release Baseline phase.
 
 - Local Database Release Gate: VERIFIED
 - Overall Production Readiness: PASS_WITH_EXTERNAL_DEPENDENCY
-- Verified git commit: 1737a4a6f3fac5f4a7e7121d84088ec546f001f3 on main
+- Verified git commit: 6ab81b9d720b9abfac692ab6b7afcdd15e796b53 on main
 - Remote SHA confirmed: matches https://github.com/Abdulrehman1978/zavlio.git
 
 Stop here; do not start Packet 18 or deferred visual packets 02–05 without

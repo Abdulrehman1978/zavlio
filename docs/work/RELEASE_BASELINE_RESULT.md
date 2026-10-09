@@ -2,11 +2,11 @@
 
 ## Release Identifier
 
-- Commit: 1737a4a6f3fac5f4a7e7121d84088ec546f001f3
+- Commit: 6ab81b9d720b9abfac692ab6b7afcdd15e796b53
 - Branch: main
 - Remote: https://github.com/Abdulrehman1978/zavlio.git
-- Remote SHA confirmed: 1737a4a6f3fac5f4a7e7121d84088ec546f001f3 (matches local HEAD)
-- Commit message: test: run E2E web server in test environment
+- Remote SHA confirmed: 6ab81b9d720b9abfac692ab6b7afcdd15e796b53 (matches local HEAD)
+- Commit message: chore: close release baseline CI verification
 - Date: 2026-10-09
 
 ## Overall Status
@@ -16,11 +16,11 @@
 
 ## Final GitHub CI Closure
 
-- Workflow run: [37890936080](https://github.com/Abdulrehman1978/zavlio/actions/runs/37890936080)
-- `verify`: PASS ([job 113691476905](https://github.com/Abdulrehman1978/zavlio/actions/runs/37890936080/job/113691476905))
-- `database`: PASS ([job 113691476642](https://github.com/Abdulrehman1978/zavlio/actions/runs/37890936080/job/113691476642))
+- Workflow run: [37892264117](https://github.com/Abdulrehman1978/zavlio/actions/runs/37892264117)
+- `verify`: PASS ([job 113695590737](https://github.com/Abdulrehman1978/zavlio/actions/runs/37892264117/job/113695590737))
+- `database`: PASS ([job 113695590996](https://github.com/Abdulrehman1978/zavlio/actions/runs/37892264117/job/113695590996))
 - Both jobs completed successfully on 2026-10-09. The verify job included the pinned adapter, social-provider checks, ephemeral Supabase start/reset, and 18/18 Playwright E2E + axe tests. The database job completed clean startup/reset, migrations, lint, pgTAP, and deterministic generated-type verification.
-- GitHub push: PASS; `origin/main` matches local HEAD at `1737a4a6f3fac5f4a7e7121d84088ec546f001f3`.
+- GitHub push: PASS; `origin/main` matches local HEAD at `6ab81b9d720b9abfac692ab6b7afcdd15e796b53`.
 
 ## Pre-Push Gate Matrix (all PASS)
 
@@ -53,7 +53,7 @@
 | Meta Bridge       |  PASS  | 51 checks, 11 hostile cases, signed lifecycle                         |
 | Meta Adapter      |  PASS  | 54 checks, process isolation, CDP verification                        |
 | Social Provider   |  PASS  | 31 checks, 0 real external side effects                               |
-| E2E + a11y        |  PASS  | 18/18 Playwright tests, axe accessibility (GitHub CI run 37890936080) |
+| E2E + a11y        |  PASS  | 18/18 Playwright tests, axe accessibility (GitHub CI run 37892264117) |
 | Manual Browser QA |  PASS  | 43/43 entries across all roles and viewports                          |
 
 ## Security Pre-flight (all clear)
