@@ -18,6 +18,7 @@ export default defineConfig({
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
     command: `pnpm --filter @zavlio/web exec next start -p ${port}`,
+    env: { ...process.env, NODE_ENV: 'test' },
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
     url: baseURL,
