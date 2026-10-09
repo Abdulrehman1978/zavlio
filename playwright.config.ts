@@ -17,7 +17,7 @@ export default defineConfig({
   use: { baseURL, trace: 'on-first-retry' },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    command: `pnpm --filter @zavlio/web start -- -p ${port}`,
+    command: `pnpm --filter @zavlio/web exec next start -p ${port}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
     url: baseURL,
