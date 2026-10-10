@@ -15,6 +15,9 @@ import {
 import { SiteHeader } from '../../../components/site-header';
 import { SiteFooter } from '../../../components/site-footer';
 import { SERVICES } from '../../../lib/content';
+import { getResolvedServiceBySlug } from '../../../lib/content-resolver';
+
+export const dynamicParams = true;
 
 export function generateStaticParams() {
   return SERVICES.map((service) => ({ slug: service.slug }));
@@ -26,7 +29,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const service = SERVICES.find((s) => s.slug === slug);
+  const service = await getResolvedServiceBySlug(slug);
   if (!service) return { title: 'Service Not Found — Zavlio' };
 
   return {
@@ -44,7 +47,7 @@ export async function generateMetadata({
 
 export default async function ServiceDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const service = SERVICES.find((s) => s.slug === slug);
+  const service = await getResolvedServiceBySlug(slug);
   if (!service) notFound();
 
   return (

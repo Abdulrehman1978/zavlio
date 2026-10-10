@@ -5,6 +5,9 @@ import { Button, Container, Section, DisplayHeading, Badge } from '@zavlio/ui';
 import { SiteHeader } from '../../../components/site-header';
 import { SiteFooter } from '../../../components/site-footer';
 import { INSIGHTS } from '../../../lib/content';
+import { getResolvedInsightBySlug } from '../../../lib/content-resolver';
+
+export const dynamicParams = true;
 
 export function generateStaticParams() {
   return INSIGHTS.map((i) => ({ slug: i.slug }));
@@ -16,7 +19,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const insight = INSIGHTS.find((i) => i.slug === slug);
+  const insight = await getResolvedInsightBySlug(slug);
   if (!insight) return { title: 'Insight Not Found — Zavlio' };
 
   return {
@@ -34,7 +37,7 @@ export async function generateMetadata({
 
 export default async function InsightDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const insight = INSIGHTS.find((i) => i.slug === slug);
+  const insight = await getResolvedInsightBySlug(slug);
   if (!insight) notFound();
 
   return (

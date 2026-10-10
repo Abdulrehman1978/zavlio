@@ -2,27 +2,23 @@
 
 ## Database Architecture & Verified Baseline
 
-The database remains PostgreSQL/RLS-first across 39 application tables and 20 forward-only migrations. Clean replay, generated types (zero drift), and 175 pgTAP assertions were fully verified in baseline CI run `38038752615` and verified locally.
+The database remains PostgreSQL/RLS-first across **52 public application tables** and 20 forward-only migrations, with RLS enabled on all 52 tables. Clean replay, generated types (zero drift), and 175 pgTAP assertions were fully verified in baseline CI runs (`38038752615` and `38055453341`) and verified locally.
 
-## Packet 14
+## Migration Inventory & Authority
 
-`automation_machine_operations` is an RLS-enabled infrastructure-only receipt table keyed uniquely by agent, operation type, and operation ID. It stores the request hash and immutable response for claim/lease/start/result retries, plus bounded expiry. Only expired receipts may be deleted by the service-role cleanup path.
+SQL migrations under `supabase/migrations` are authoritative. They run in timestamp order from `20260927060100_extensions_helpers.sql` through `20261001062000_social_ingestion_materialization.sql` (20 forward-only migrations); `supabase/seed.sql` contains only deterministic local defaults.
 
-`automation_agents` now records protocol/bridge version, DRY_RUN_ONLY mode, runtime instance, handshake time, bounded clock skew, and negotiated capabilities. `automation_jobs` records the machine instance and claim operation. `automation_nonces` remains the per-agent replay ledger and now has a cleanup index.
+## Verified Table Catalog (52 Application Tables)
 
-Status: Packet 08 schema/runtime foundation implemented; identity resolution and application workflows remain later packets.
-
-## Source of truth and migrations
-
-SQL migrations under `supabase/migrations` are authoritative. They run in timestamp order from `20260927060100_extensions_helpers.sql` through `20260927060900_rls_baseline.sql`; `supabase/seed.sql` contains only deterministic local defaults.
-
-## Entities and relationships
-
-- **Staff/content:** `staff_profiles`, `authors`, `testimonials`, `services`, `projects`, `project_media`, `lab_projects`, `insights`, `site_settings`, `navigation_items`, `footer_links`, `reusable_content_blocks`. Project media belongs to projects; insights may reference authors.
-- **Identity/telemetry:** `organizations` → `people`; anonymous visitors remain unlinked in Packet 08; sessions belong to visitors; identities belong to people; consents belong to a person, visitor, or preference-only `consent_key`; events link visitors and sessions; submissions/linking remain later-packet concerns.
-- **CRM:** opportunities belong to people and may reference organizations, stages, and staff owners; stage history belongs to opportunities; tasks and notes reference CRM subjects; touchpoints belong to people and may reference opportunities.
-- **Engagement:** conversations belong to people; messages belong to conversations and people; campaigns have composite-key campaign membership rows for people.
-- **Automation/audit:** agents own runs/nonces and may claim jobs; jobs may link people/opportunities; actions link jobs, runs, and people; audit logs retain actor/entity evidence.
+- **Staff & Content (12):** `staff_profiles`, `authors`, `testimonials`, `services`, `projects`, `project_media`, `lab_projects`, `insights`, `site_settings`, `navigation_items`, `footer_links`, `reusable_content_blocks`.
+- **Identity & Telemetry (10):** `organizations`, `people`, `anonymous_visitors`, `sessions`, `identities`, `identity_match_candidates`, `consents`, `events`, `form_submissions`, `lead_scores`.
+- **CRM Operations & Pipeline (7):** `pipeline_stages`, `opportunities`, `opportunity_stage_history`, `tasks`, `notes`, `touchpoints`, `person_merges`.
+- **Intake & Outbox (1):** `email_outbox`.
+- **Lead Scoring (1):** `lead_scoring_models`.
+- **Engagement & Campaigns (4):** `conversations`, `messages`, `campaigns`, `campaign_members`.
+- **Automation Control Plane & Bridge (11):** `automation_agents`, `automation_settings`, `automation_jobs`, `automation_runs`, `automation_actions`, `automation_nonces`, `automation_policy_versions`, `automation_policy_decisions`, `automation_approvals`, `automation_job_events`, `automation_machine_operations`.
+- **Audit Logging (1):** `audit_logs` (append-only, immutable).
+- **Social Integration & Ingestion (5):** `social_provider_settings`, `social_provider_observations`, `social_sync_cursors`, `social_canary_permits`, `social_identity_observations`.
 
 ## Types and constraints
 

@@ -43,7 +43,8 @@ When viewing audit events, all payloads are processed through `apps/web/src/lib/
 
 `/crm/settings` organizes administrative domains into clear functional cards:
 
-1. **Staff Administration** (`/crm/staff`): Manage staff invitations, assign roles, view active profiles. Final owner accounts cannot be demoted or deleted.
-2. **Identity Review** (`/crm/people` filter): Review unmerged candidate identities and approve canonical merges.
-3. **Scoring Models** (`/crm/settings/scoring`): Inspect versioned lead scoring configuration, weights, and decay half-lives. Read-only in UI.
+1. **Staff Administration** (`/crm/settings/staff`): Manage staff invitations, assign roles, view active profiles. Final owner accounts cannot be demoted or deleted.
+2. **Identity Review** (`/crm/settings/identity-review`): Review unmerged candidate identities and approve canonical merges.
+3. **Scoring Models** (`/crm/settings/lead-scoring`): Inspect versioned lead scoring configuration, weights, and decay half-lives. Read-only in UI.
 4. **Automation Bridge & Leases** (`/crm/automation`): Monitor active worker leases, inspect signed machine agent heartbeats, and manage the platform kill switch (`DISABLED`).
+5. **Social Settings & Canary** (`/crm/settings/social`): Supervise provider observation ingestion and canary permits (`LIVE_EXTERNAL_EXECUTION=false`).

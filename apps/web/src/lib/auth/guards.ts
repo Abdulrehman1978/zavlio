@@ -4,8 +4,8 @@ import { AppError } from '@zavlio/config';
 import type { User } from '@supabase/supabase-js';
 import { createServerSupabaseClient } from '../supabase/server';
 
-import type { StaffRole } from './roles';
-export { roleCanInvite, type StaffRole } from './roles';
+import { roleSatisfies, type StaffRole } from './roles';
+export { roleCanInvite, roleSatisfies, type StaffRole } from './roles';
 export type StaffProfile = {
   id: string;
   auth_user_id: string | null;
@@ -74,9 +74,8 @@ export async function requireRole(...roles: StaffRole[]): Promise<StaffContext> 
 }
 
 export async function requireMinimumRole(role: StaffRole): Promise<StaffContext> {
-  const rank: Record<StaffRole, number> = { VIEWER: 1, OPERATOR: 2, ADMIN: 3, OWNER: 4 };
   const staff = await requireStaff();
-  if (rank[staff.staff.role] < rank[role]) {
+  if (!roleSatisfies(staff.staff.role, role)) {
     throw new AppError({
       code: 'FORBIDDEN',
       message: 'You are not allowed to perform this action.',

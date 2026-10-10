@@ -14,7 +14,7 @@ import {
 import { SiteHeader } from '../../components/site-header';
 import { SiteFooter } from '../../components/site-footer';
 import { ProjectVisual } from '../../components/project-visual';
-import { PROJECTS } from '../../lib/content';
+import { getResolvedProjects } from '../../lib/content-resolver';
 
 export const metadata: Metadata = {
   title: 'Selected Work & Case Studies — Zavlio',
@@ -30,7 +30,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function WorkIndexPage() {
+export default async function WorkIndexPage() {
+  const projects = await getResolvedProjects();
+
   return (
     <div className="flex min-h-screen flex-col bg-[#F5F2EA] text-[#0D0D0D]">
       <SiteHeader />
@@ -59,7 +61,7 @@ export default function WorkIndexPage() {
         <Section spacing="default" className="bg-[#FAF8F4]">
           <Container>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-              {PROJECTS.map((project) => (
+              {projects.map((project) => (
                 <Card
                   key={project.slug}
                   className="group flex flex-col justify-between p-8 sm:p-12 hover:border-[#BBB6AA]"

@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { Container, Section, DisplayHeading, Eyebrow, BodyCopy, Card, Badge } from '@zavlio/ui';
 import { SiteHeader } from '../../components/site-header';
 import { SiteFooter } from '../../components/site-footer';
-import { INSIGHTS } from '../../lib/content';
+import { getResolvedInsights } from '../../lib/content-resolver';
 
 export const metadata: Metadata = {
   title: 'Insights & Perspectives — Zavlio',
@@ -19,7 +19,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function InsightsIndexPage() {
+export default async function InsightsIndexPage() {
+  const insights = await getResolvedInsights();
+
   return (
     <div className="flex min-h-screen flex-col bg-[#F5F2EA] text-[#0D0D0D]">
       <SiteHeader />
@@ -48,7 +50,7 @@ export default function InsightsIndexPage() {
         <Section spacing="default" className="bg-[#FAF8F4]">
           <Container>
             <div className="space-y-8">
-              {INSIGHTS.map((article) => (
+              {insights.map((article) => (
                 <Card
                   key={article.slug}
                   className="p-8 sm:p-12 transition-all duration-200 hover:border-[#BBB6AA]"

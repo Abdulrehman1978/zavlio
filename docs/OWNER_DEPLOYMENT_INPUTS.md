@@ -52,11 +52,11 @@
 
 ## 5. Owner Business & Legal Sign-Offs
 
-| Decision Item                        | Required Reviewer | Status                    | Action Required Prior to Public Launch                                                      |
-| :----------------------------------- | :---------------- | :------------------------ | :------------------------------------------------------------------------------------------ |
-| **Legal Entity Registration**        | Company Owner     | `OWNER_DECISION_REQUIRED` | Confirm trading entity, registered address, and jurisdiction for Terms/Privacy.             |
-| **Privacy Policy & DSR Policy**      | Legal Counsel     | `LEGAL_REVIEW_REQUIRED`   | Formally approve subject access request response timeline and retention policy matrix.      |
-| **Terms of Service**                 | Legal Counsel     | `LEGAL_REVIEW_REQUIRED`   | Review limitation of liability and intellectual property clauses.                           |
-| **Monitored Contact Inbox**          | Company Owner     | `OWNER_DECISION_REQUIRED` | Confirm `contact@zavlio.online` is active, monitored, and receiving inbound communications. |
-| **Production Content Authorization** | Platform Owner    | `OWNER_DECISION_REQUIRED` | Authorize transitioning concept studies to production or supplying client references.       |
-| **Social Provider Live Execution**   | Platform Owner    | `INTENTIONALLY_DISABLED`  | Explicitly remains `LIVE_EXTERNAL_EXECUTION=false`. No live outreach permitted.             |
+| Decision Item                        | Required Reviewer | Status                    | Action Required Prior to Public Launch                                                                                                                     |
+| :----------------------------------- | :---------------- | :------------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Legal Entity Registration**        | Company Owner     | `OWNER_DECISION_REQUIRED` | Confirm trading entity, registered address, and jurisdiction for Terms/Privacy.                                                                            |
+| **Privacy Policy & DSR Policy**      | Legal Counsel     | `LEGAL_REVIEW_REQUIRED`   | Formally approve subject access request response timeline and retention policy matrix.                                                                     |
+| **Terms of Service**                 | Legal Counsel     | `LEGAL_REVIEW_REQUIRED`   | Review limitation of liability and intellectual property clauses.                                                                                          |
+| **Monitored Contact Inbox**          | Company Owner     | `OWNER_DECISION_REQUIRED` | Confirm authoritative inbox `hello@zavlio.online` (and optional alias `contact@zavlio.online`) is active, monitored, and receiving inbound communications. |
+| **Production Content Authorization** | Platform Owner    | `OWNER_DECISION_REQUIRED` | Authorize transitioning concept studies to production or supplying client references.                                                                      |
+| **Social Provider Live Execution**   | Platform Owner    | `INTENTIONALLY_DISABLED`  | Explicitly remains `LIVE_EXTERNAL_EXECUTION=false`. No live outreach permitted.                                                                            |

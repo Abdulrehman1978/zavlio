@@ -12,7 +12,7 @@ import {
 } from '@zavlio/ui';
 import { SiteHeader } from '../../components/site-header';
 import { SiteFooter } from '../../components/site-footer';
-import { SERVICES } from '../../lib/content';
+import { getResolvedServices } from '../../lib/content-resolver';
 
 export const metadata: Metadata = {
   title: 'Capabilities & Services — Zavlio',
@@ -28,7 +28,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await getResolvedServices();
+
   return (
     <div className="flex min-h-screen flex-col bg-[#F5F2EA] text-[#0D0D0D]">
       <SiteHeader />
@@ -58,7 +60,7 @@ export default function ServicesPage() {
         <Section spacing="default" className="bg-[#FAF8F4]">
           <Container>
             <div className="space-y-16">
-              {SERVICES.map((service, idx) => (
+              {services.map((service, idx) => (
                 <div
                   key={service.slug}
                   id={service.slug}

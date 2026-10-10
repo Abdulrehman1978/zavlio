@@ -16,6 +16,9 @@ import { SiteHeader } from '../../../components/site-header';
 import { SiteFooter } from '../../../components/site-footer';
 import { ProjectVisual } from '../../../components/project-visual';
 import { PROJECTS } from '../../../lib/content';
+import { getResolvedProjects, getResolvedProjectBySlug } from '../../../lib/content-resolver';
+
+export const dynamicParams = true;
 
 export function generateStaticParams() {
   return PROJECTS.map((p) => ({ slug: p.slug }));
@@ -27,7 +30,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const project = PROJECTS.find((p) => p.slug === slug);
+  const project = await getResolvedProjectBySlug(slug);
   if (!project) return { title: 'Project Not Found — Zavlio' };
 
   return {
@@ -45,12 +48,13 @@ export async function generateMetadata({
 
 export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const project = PROJECTS.find((p) => p.slug === slug);
+  const project = await getResolvedProjectBySlug(slug);
   if (!project) notFound();
 
   // Find next project
-  const currentIndex = PROJECTS.findIndex((p) => p.slug === slug);
-  const nextProject = PROJECTS[(currentIndex + 1) % PROJECTS.length] ?? project;
+  const allProjects = await getResolvedProjects();
+  const currentIndex = allProjects.findIndex((p) => p.slug === slug);
+  const nextProject = allProjects[(currentIndex + 1) % allProjects.length] ?? project;
 
   return (
     <div className="flex min-h-screen flex-col bg-[#F5F2EA] text-[#0D0D0D]">

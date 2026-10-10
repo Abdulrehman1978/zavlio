@@ -15,7 +15,12 @@ import { SiteFooter } from '../components/site-footer';
 import { OperatingCycle } from '../components/operating-cycle';
 import { SpatialKineticArtifact } from '../components/spatial-kinetic-artifact';
 import { ProjectVisual } from '../components/project-visual';
-import { PROJECTS, SERVICES, LAB_EXPERIMENTS, INSIGHTS } from '../lib/content';
+import {
+  getResolvedProjects,
+  getResolvedServices,
+  getResolvedLabProjects,
+  getResolvedInsights,
+} from '../lib/content-resolver';
 
 export const metadata = {
   title: "Zavlio — Build What's Next",
@@ -26,7 +31,14 @@ export const metadata = {
   },
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [projects, services, labExperiments, insights] = await Promise.all([
+    getResolvedProjects(),
+    getResolvedServices(),
+    getResolvedLabProjects(),
+    getResolvedInsights(),
+  ]);
+
   return (
     <div className="flex min-h-screen flex-col bg-[#F5F2EA] text-[#0D0D0D]">
       <SiteHeader />
@@ -123,7 +135,7 @@ export default function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {SERVICES.map((service, index) => (
+              {services.map((service, index) => (
                 <Card key={service.slug} className="flex flex-col justify-between">
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
@@ -173,7 +185,7 @@ export default function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {PROJECTS.map((project) => (
+              {projects.map((project) => (
                 <Card
                   key={project.slug}
                   className="group flex flex-col justify-between p-8 sm:p-10"
@@ -357,7 +369,7 @@ export default function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {LAB_EXPERIMENTS.map((lab) => (
+              {labExperiments.map((lab) => (
                 <Card key={lab.slug} className="flex flex-col justify-between p-6 sm:p-8">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
@@ -409,7 +421,7 @@ export default function HomePage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {INSIGHTS.map((insight) => (
+              {insights.map((insight) => (
                 <Card key={insight.slug} className="flex flex-col justify-between p-6 sm:p-8">
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">

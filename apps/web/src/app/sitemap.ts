@@ -1,8 +1,20 @@
 import type { MetadataRoute } from 'next';
-import { PROJECTS, SERVICES, LAB_EXPERIMENTS, INSIGHTS } from '../lib/content';
+import {
+  getResolvedProjects,
+  getResolvedServices,
+  getResolvedLabProjects,
+  getResolvedInsights,
+} from '../lib/content-resolver';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://zavlio.online';
+
+  const [projects, services, labExperiments, insights] = await Promise.all([
+    getResolvedProjects(),
+    getResolvedServices(),
+    getResolvedLabProjects(),
+    getResolvedInsights(),
+  ]);
 
   const staticRoutes = [
     '',
@@ -23,28 +35,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === '' ? 1.0 : 0.8,
   }));
 
-  const serviceRoutes = SERVICES.map((service) => ({
+  const serviceRoutes = services.map((service) => ({
     url: `${baseUrl}/services/${service.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.8,
   }));
 
-  const projectRoutes = PROJECTS.map((project) => ({
+  const projectRoutes = projects.map((project) => ({
     url: `${baseUrl}/work/${project.slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   }));
 
-  const labRoutes = LAB_EXPERIMENTS.map((lab) => ({
+  const labRoutes = labExperiments.map((lab) => ({
     url: `${baseUrl}/lab/${lab.slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.6,
   }));
 
-  const insightRoutes = INSIGHTS.map((insight) => ({
+  const insightRoutes = insights.map((insight) => ({
     url: `${baseUrl}/insights/${insight.slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,

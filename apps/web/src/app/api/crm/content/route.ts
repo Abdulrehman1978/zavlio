@@ -1,7 +1,30 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { contentItemCreateSchema, contentItemUpdateSchema } from '@zavlio/validation';
 import { requireMinimumRole } from '../../../../lib/auth/guards';
 import { createServerSupabaseClient } from '../../../../lib/supabase/server';
+
+function triggerRevalidation(table: string, slug: string) {
+  try {
+    revalidatePath('/', 'layout');
+    revalidatePath('/sitemap.xml');
+    if (table === 'projects') {
+      revalidatePath('/work');
+      revalidatePath(`/work/${slug}`);
+    } else if (table === 'services') {
+      revalidatePath('/services');
+      revalidatePath(`/services/${slug}`);
+    } else if (table === 'lab_projects') {
+      revalidatePath('/lab');
+      revalidatePath(`/lab/${slug}`);
+    } else if (table === 'insights') {
+      revalidatePath('/insights');
+      revalidatePath(`/insights/${slug}`);
+    }
+  } catch {
+    // Graceful no-op in non-Next.js or unit test mock execution contexts
+  }
+}
 
 export async function POST(request: Request) {
   try {
@@ -14,18 +37,63 @@ export async function POST(request: Request) {
       ? contentItemUpdateSchema.parse(json)
       : contentItemCreateSchema.parse(json);
 
-    // If publishing or archiving, enforce ADMIN or OWNER role
-    if (body.status === 'PUBLISHED' || body.status === 'ARCHIVED') {
-      await requireMinimumRole('ADMIN');
-    }
-
     const db = await createServerSupabaseClient();
     const table = body.type;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const tableQuery = (db as any).from(table);
 
+    // Unapproved claim enforcement: Unapproved claims cannot be published
+    if (
+      body.status === 'PUBLISHED' &&
+      (body.claimStatus === 'UNVERIFIED' || body.claimStatus === 'RETIRED')
+    ) {
+      return NextResponse.json(
+        {
+          error: `Cannot publish content with unapproved or retired claims (claim_status: ${body.claimStatus}).`,
+        },
+        { status: 400 },
+      );
+    }
+
+    // Production demo content protection: Do not expose demo content in production
+    const isProduction =
+      process.env.NODE_ENV === 'production' &&
+      process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' &&
+      !process.env.ALLOW_DEMO_PUBLISH;
+
+    if (isProduction && body.demoContent && body.status === 'PUBLISHED') {
+      return NextResponse.json(
+        { error: 'Cannot publish demo content in production environment.' },
+        { status: 400 },
+      );
+    }
+
     if (isUpdate && 'id' in body && typeof body.id === 'string') {
       const updateId = body.id;
+
+      // Fetch existing record to check prior state & roles
+      const { data: prevData, error: fetchError } = await tableQuery
+        .select('*')
+        .eq('id', updateId)
+        .single();
+
+      if (fetchError || !prevData) {
+        return NextResponse.json(
+          { error: `Item with id ${updateId} not found in ${table}.` },
+          { status: 404 },
+        );
+      }
+
+      // If item is being published, archived, OR was already published/archived, require ADMIN role
+      const isAffectingLiveContent =
+        body.status === 'PUBLISHED' ||
+        body.status === 'ARCHIVED' ||
+        prevData.status === 'PUBLISHED' ||
+        prevData.status === 'ARCHIVED';
+
+      if (isAffectingLiveContent) {
+        await requireMinimumRole('ADMIN');
+      }
 
       // Check for slug collision on other records
       const { data: existing } = await tableQuery
@@ -41,9 +109,6 @@ export async function POST(request: Request) {
         );
       }
 
-      // Fetch before_state for audit
-      const { data: prevData } = await tableQuery.select('*').eq('id', updateId).single();
-
       const updatePayload: Record<string, unknown> = {
         title: body.title,
         slug: body.slug,
@@ -57,7 +122,7 @@ export async function POST(request: Request) {
         updated_at: new Date().toISOString(),
       };
 
-      if (body.status === 'PUBLISHED' && (!prevData || !prevData.published_at)) {
+      if (body.status === 'PUBLISHED' && !prevData.published_at) {
         updatePayload.published_at = new Date().toISOString();
       }
 
@@ -75,19 +140,41 @@ export async function POST(request: Request) {
 
       if (updateError) throw updateError;
 
-      // Append-only audit log
-      await db.from('audit_logs').insert({
+      // Append-only audit log with transactional rollback guard
+      const { error: auditError } = await db.from('audit_logs').insert({
         actor_type: 'STAFF',
         actor_id: staff.id,
-        action: body.status === 'PUBLISHED' ? 'CONTENT_PUBLISHED' : 'CONTENT_UPDATED',
+        action:
+          body.status === 'PUBLISHED'
+            ? 'CONTENT_PUBLISHED'
+            : body.status === 'ARCHIVED'
+              ? 'CONTENT_ARCHIVED'
+              : 'CONTENT_UPDATED',
         entity_type: table,
         entity_id: updateId,
         before_state: prevData ? (prevData as never) : null,
         after_state: updated ? (updated as never) : null,
       });
 
+      if (auditError) {
+        // Rollback database mutation to prevent un-audited state
+        await tableQuery.update(prevData).eq('id', updateId);
+        return NextResponse.json(
+          { error: 'Audit log insertion failed. Mutation was rolled back to maintain integrity.' },
+          { status: 500 },
+        );
+      }
+
+      // Trigger cache invalidation for published/updated content
+      triggerRevalidation(table, body.slug);
+
       return NextResponse.json({ ok: true, item: updated }, { status: 200 });
     } else {
+      // Creation: If creating directly as PUBLISHED or ARCHIVED, enforce ADMIN role
+      if (body.status === 'PUBLISHED' || body.status === 'ARCHIVED') {
+        await requireMinimumRole('ADMIN');
+      }
+
       // Check for slug collision
       const { data: existing } = await tableQuery.select('id').eq('slug', body.slug).limit(1);
 
@@ -128,15 +215,31 @@ export async function POST(request: Request) {
 
       if (insertError) throw insertError;
 
-      // Append-only audit log
-      await db.from('audit_logs').insert({
+      const insertedId = (inserted as { id: string }).id;
+
+      // Append-only audit log with transactional rollback guard
+      const { error: auditError } = await db.from('audit_logs').insert({
         actor_type: 'STAFF',
         actor_id: staff.id,
-        action: 'CONTENT_CREATED',
+        action: body.status === 'PUBLISHED' ? 'CONTENT_PUBLISHED' : 'CONTENT_CREATED',
         entity_type: table,
-        entity_id: (inserted as { id: string }).id,
+        entity_id: insertedId,
         after_state: inserted ? (inserted as never) : null,
       });
+
+      if (auditError) {
+        // Rollback creation to prevent un-audited state
+        await tableQuery.delete().eq('id', insertedId);
+        return NextResponse.json(
+          { error: 'Audit log insertion failed. Mutation was rolled back to maintain integrity.' },
+          { status: 500 },
+        );
+      }
+
+      // Trigger cache invalidation if published
+      if (body.status === 'PUBLISHED') {
+        triggerRevalidation(table, body.slug);
+      }
 
       return NextResponse.json({ ok: true, item: inserted }, { status: 201 });
     }

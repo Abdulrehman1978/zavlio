@@ -170,3 +170,12 @@ Implemented the two public intake routes, shared server orchestration, strict sc
   - Phase I (Packet 19): Built and executed automated rehearsal runner `scripts/offline-rehearsal.mjs` (11/11 STAGES PASSED). Generated `docs/work/19-prep-result.md` (`PREPARED_FOR_HOSTED_REHEARSAL`).
   - Phase J (Packet 20): Created complete `docs/OWNER_DEPLOYMENT_INPUTS.md`, operator runbooks (`docs/OPERATOR_GUIDE_*.md`), `docs/work/20-prehandoff-result.md` (`PREDEPLOYMENT_HANDOFF_READY`), and reconciled all core documentation.
 - Monorepo health verified: 110/110 unit tests, 10-package typecheck clean, 0 ESLint warnings, 100% Prettier, 587 files scanned with 0 secrets.
+
+## 2026-10-10 — Packet 20R Final Source-of-Truth & Functional Integration Closure
+
+- Connected public routes (`/`, `/work`, `/work/[slug]`, `/services`, `/services/[slug]`, `/lab`, `/lab/[slug]`, `/insights`, `/insights/[slug]`, `/sitemap.xml`) to PostgreSQL content tables (`projects`, `services`, `lab_projects`, `insights`) via `apps/web/src/lib/content-resolver.ts`.
+- Enforced strict publication rules: DRAFT, ARCHIVED, and INTERNAL content excluded from public routes; static counterparts suppressed if matching database record is archived/draft; unapproved claims (`UNVERIFIED`, `RETIRED`) cannot be published; role-safe publishing (OPERATOR denied, ADMIN/OWNER required).
+- Implemented transactional audit consistency in `apps/web/src/app/api/crm/content/route.ts` with compensating rollback reverting database mutations if audit insert fails.
+- Reconciled documentation: contact email (`hello@zavlio.online`), operator guide routes, database table catalog (52 application tables with RLS), lab vs field performance metrics, and local disposable backup/restore boundaries.
+- Added comprehensive unit and integration suites: `tests/unit/cms-publishing.test.ts` (8 tests), `tests/unit/cms-mutation-api.test.ts` (5 tests), `tests/unit/crm-workspaces-rbac.test.ts` (10 tests), and database-backed Playwright lifecycle `tests/e2e/cms-publishing.spec.ts`.
+- Full release gates verified: 133/133 unit tests (23 suites), 28 Playwright tests (8 files), Next.js 53 static routes compiled, 0 ESLint warnings, 100% Prettier, secret scan clean (612 files), 11/11 offline rehearsal stages PASS. State declared: `ENGINEERING_COMPLETE_AWAITING_DEPLOYMENT`.

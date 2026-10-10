@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-10T13:18:11.490Z",
+  "timestamp": "2026-10-10T14:12:57.807Z",
   "environment": "Local Offline Disposable Workspace",
   "totalStages": 11,
   "passedStages": 11,
@@ -9,67 +9,67 @@
       "stage": "Secret & Credential Scan",
       "command": "node scripts/secret-scan.mjs",
       "status": "PASS",
-      "durationMs": 1651
+      "durationMs": 352
     },
     {
       "stage": "Log Redaction & PII Safety",
       "command": "node scripts/log-redaction-test.mjs",
       "status": "PASS",
-      "durationMs": 451
+      "durationMs": 65
     },
     {
       "stage": "Meta Automation Upstream Pin & Integrity",
       "command": "node scripts/meta-verify-pin.mjs",
       "status": "PASS",
-      "durationMs": 915
+      "durationMs": 273
     },
     {
       "stage": "Database Static Schema & Asset Verification",
       "command": "node scripts/db.mjs verify",
       "status": "PASS",
-      "durationMs": 165
+      "durationMs": 70
     },
     {
       "stage": "Meta Adapter CDP Isolation (Synthetic Browser)",
       "command": "node scripts/meta-adapter-runtime-test.mjs",
       "status": "PASS",
-      "durationMs": 38943
+      "durationMs": 32578
     },
     {
       "stage": "Social Provider Dry-Run & Instagram Unsupported Checks",
       "command": "node scripts/social-provider-runtime-test.mjs",
       "status": "PASS",
-      "durationMs": 399
+      "durationMs": 162
     },
     {
       "stage": "Automated 27-Route SEO Crawl & Static HTML Audit",
       "command": "node scripts/seo-crawl-audit.mjs",
       "status": "PASS",
-      "durationMs": 199
+      "durationMs": 78
     },
     {
       "stage": "Vitest Unit Test Suite (110 Tests)",
       "command": "pnpm test:unit",
       "status": "PASS",
-      "durationMs": 27398
+      "durationMs": 18911
     },
     {
       "stage": "Monorepo TypeScript Verification",
       "command": "pnpm typecheck",
       "status": "PASS",
-      "durationMs": 13950
+      "durationMs": 7408
     },
     {
       "stage": "Monorepo ESLint & Prettier Verification",
       "command": "pnpm lint",
       "status": "PASS",
-      "durationMs": 22697
+      "durationMs": 10727
     },
     {
       "stage": "Next.js Production Build & SSG Generation",
       "command": "pnpm build",
       "status": "PASS",
-      "durationMs": 25623
+      "durationMs": 42967
     }
   ]
 }

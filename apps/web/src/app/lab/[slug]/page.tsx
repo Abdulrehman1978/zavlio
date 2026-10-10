@@ -15,6 +15,9 @@ import { SiteHeader } from '../../../components/site-header';
 import { SiteFooter } from '../../../components/site-footer';
 import { SpatialKineticArtifact } from '../../../components/spatial-kinetic-artifact';
 import { LAB_EXPERIMENTS } from '../../../lib/content';
+import { getResolvedLabProjectBySlug } from '../../../lib/content-resolver';
+
+export const dynamicParams = true;
 
 export function generateStaticParams() {
   return LAB_EXPERIMENTS.map((e) => ({ slug: e.slug }));
@@ -26,7 +29,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const lab = LAB_EXPERIMENTS.find((e) => e.slug === slug);
+  const lab = await getResolvedLabProjectBySlug(slug);
   if (!lab) return { title: 'Experiment Not Found — Zavlio' };
 
   return {
@@ -44,7 +47,7 @@ export async function generateMetadata({
 
 export default async function LabDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const lab = LAB_EXPERIMENTS.find((e) => e.slug === slug);
+  const lab = await getResolvedLabProjectBySlug(slug);
   if (!lab) notFound();
 
   return (

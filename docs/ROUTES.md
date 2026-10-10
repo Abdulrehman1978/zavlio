@@ -47,23 +47,26 @@ All public routes are statically compiled (SSG) with ISR/fallback capabilities, 
 
 Guarded by Next.js 16 `proxy.ts`, server-side session authentication (`auth.getClaims()`), and database RLS. Unauthenticated visitors are redirected to `/login?next=...`. Non-staff users receive 403 Forbidden.
 
-| Route                | RBAC Minimum                        | Capabilities                                                                                           |
-| :------------------- | :---------------------------------- | :----------------------------------------------------------------------------------------------------- |
-| `/crm`               | VIEWER                              | Executive operational dashboard: key intake volume, pipeline overview, active tasks                    |
-| `/crm/people`        | VIEWER (Read) / OPERATOR+ (Write)   | Searchable person directory, 25/page pagination, status filters, canonical merge indicator             |
-| `/crm/people/[id]`   | VIEWER (Read) / OPERATOR+ (Write)   | Person detail view, normalized timeline cursor, consent status, DNC badge, touchpoints                 |
-| `/crm/organizations` | VIEWER (Read) / OPERATOR+ (Write)   | Organization list, associated contacts, domain lookups                                                 |
-| `/crm/pipeline`      | VIEWER (Read) / OPERATOR+ (Write)   | Accessible pipeline stage transitions, monetary formatting (`numeric(14,2)`), optimistic preconditions |
-| `/crm/tasks`         | VIEWER (Read) / OPERATOR+ (Write)   | Task management queue, priority indicators, completion toggle                                          |
-| `/crm/conversations` | VIEWER (Read) / OPERATOR+ (Write)   | Multi-channel thread viewer, dry-run reply composer (no unverified external sends)                     |
-| `/crm/content`       | OPERATOR (Draft) / ADMIN+ (Publish) | CMS workspace: draft/published/archived lifecycle, slug validator, claim status flags                  |
-| `/crm/campaigns`     | OPERATOR (Draft) / ADMIN+ (Manage)  | Campaign planning workspace: date windows, member management, DNC suppression preview                  |
-| `/crm/consent`       | VIEWER (Read) / ADMIN+ (Manage)     | Consent history audit, DSR data export trigger, anonymize dry-run preview                              |
-| `/crm/audit`         | ADMIN / OWNER                       | Immutable audit log explorer: actor, action, entity filters, recursively redacted payloads             |
-| `/crm/settings`      | ADMIN / OWNER                       | Unified administration hub: staff management, scoring settings, bridge settings                        |
-| `/crm/automation`    | OPERATOR+ (View) / ADMIN+ (Manage)  | Worker leases, job queue monitor, dry-run agent inspector, kill switch (`DISABLED`)                    |
-| `/crm/reports`       | VIEWER+ (All staff)                 | 5 security-invoker aggregate reports (Overview, Acquisition, Leads, Pipeline, Operations)              |
-| `/crm/staff`         | ADMIN (Ops/Viewers) / OWNER (All)   | Staff list, invite modal, role assignment (VIEWER, OPERATOR, ADMIN, OWNER), final-owner protection     |
+| Route                           | RBAC Minimum                        | Capabilities                                                                                           |
+| :------------------------------ | :---------------------------------- | :----------------------------------------------------------------------------------------------------- |
+| `/crm`                          | VIEWER                              | Executive operational dashboard: key intake volume, pipeline overview, active tasks                    |
+| `/crm/people`                   | VIEWER (Read) / OPERATOR+ (Write)   | Searchable person directory, 25/page pagination, status filters, canonical merge indicator             |
+| `/crm/people/[id]`              | VIEWER (Read) / OPERATOR+ (Write)   | Person detail view, normalized timeline cursor, consent status, DNC badge, touchpoints                 |
+| `/crm/organizations`            | VIEWER (Read) / OPERATOR+ (Write)   | Organization list, associated contacts, domain lookups                                                 |
+| `/crm/pipeline`                 | VIEWER (Read) / OPERATOR+ (Write)   | Accessible pipeline stage transitions, monetary formatting (`numeric(14,2)`), optimistic preconditions |
+| `/crm/tasks`                    | VIEWER (Read) / OPERATOR+ (Write)   | Task management queue, priority indicators, completion toggle                                          |
+| `/crm/conversations`            | VIEWER (Read) / OPERATOR+ (Write)   | Multi-channel thread viewer, dry-run reply composer (no unverified external sends)                     |
+| `/crm/content`                  | OPERATOR (Draft) / ADMIN+ (Publish) | CMS workspace: draft/published/archived lifecycle, slug validator, claim status flags                  |
+| `/crm/campaigns`                | OPERATOR (Draft) / ADMIN+ (Manage)  | Campaign planning workspace: date windows, member management, DNC suppression preview                  |
+| `/crm/consent`                  | VIEWER (Read) / ADMIN+ (Manage)     | Consent history audit, DSR data export trigger, anonymize dry-run preview                              |
+| `/crm/audit`                    | ADMIN / OWNER                       | Immutable audit log explorer: actor, action, entity filters, recursively redacted payloads             |
+| `/crm/analytics`                | VIEWER+ (All staff)                 | 5 security-invoker aggregate reports (Overview, Acquisition, Leads, Pipeline, Operations)              |
+| `/crm/settings`                 | ADMIN / OWNER                       | Unified administration hub: staff management, scoring settings, bridge settings, social settings       |
+| `/crm/settings/staff`           | ADMIN (Ops/Viewers) / OWNER (All)   | Staff list, invite modal, role assignment (VIEWER, OPERATOR, ADMIN, OWNER), final-owner protection     |
+| `/crm/settings/lead-scoring`    | ADMIN / OWNER                       | Lead scoring model parameters, weights, decay half-life inspection                                     |
+| `/crm/settings/identity-review` | ADMIN / OWNER                       | Candidate identity resolution review and canonical person merge approval                               |
+| `/crm/settings/social`          | ADMIN / OWNER                       | Social provider observation ingestion and canary permit controls                                       |
+| `/crm/automation`               | OPERATOR+ (View) / ADMIN+ (Manage)  | Worker leases, job queue monitor, dry-run agent inspector, kill switch (`DISABLED`)                    |
 
 ---
 

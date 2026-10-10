@@ -13,7 +13,7 @@ import {
 import { SiteHeader } from '../../components/site-header';
 import { SiteFooter } from '../../components/site-footer';
 import { SpatialKineticArtifact } from '../../components/spatial-kinetic-artifact';
-import { LAB_EXPERIMENTS } from '../../lib/content';
+import { getResolvedLabProjects } from '../../lib/content-resolver';
 
 export const metadata: Metadata = {
   title: 'Zavlio Lab — Research & Prototypes',
@@ -29,7 +29,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default function LabIndexPage() {
+export default async function LabIndexPage() {
+  const labExperiments = await getResolvedLabProjects();
   return (
     <div className="flex min-h-screen flex-col bg-[#F5F2EA] text-[#0D0D0D]">
       <SiteHeader />
@@ -76,7 +77,7 @@ export default function LabIndexPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {LAB_EXPERIMENTS.map((exp) => (
+              {labExperiments.map((exp) => (
                 <Card
                   key={exp.slug}
                   className="flex flex-col justify-between p-8 hover:border-[#BBB6AA]"
