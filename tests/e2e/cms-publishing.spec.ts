@@ -208,7 +208,7 @@ test('CMS Lifecycle: Operator draft -> Unauthorized publish denied -> Admin publ
 
   await page.goto(`/insights/${articleSlug}`);
   await expect(page.getByRole('heading', { name: articleTitle })).toBeVisible();
-  await expect(page.getByText(summaryText)).toBeVisible();
+  await expect(page.getByText(summaryText).first()).toBeVisible();
 
   // Accessibility check on dynamically published page
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
