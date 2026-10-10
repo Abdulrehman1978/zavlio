@@ -162,7 +162,7 @@ select:focus-visible {
   background: #262626;
 }
 .zavlio-consent-actions button:disabled {
-  opacity: 0.5;
+  opacity: 0.75;
   cursor: not-allowed;
 }
 

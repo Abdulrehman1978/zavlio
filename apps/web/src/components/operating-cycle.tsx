@@ -47,7 +47,7 @@ export const CYCLE_STAGES: CycleStage[] = [
     name: 'EXPERIENCE',
     subtitle: 'Digital product & web craft',
     description:
-      'We bring the brand to life across responsive web applications, mobile interfaces, and digital products that combine editorial beauty, fluid interactions, and WCAG 2.2 AA accessibility.',
+      'We bring the brand to life across responsive web applications, mobile interfaces, and digital products that combine editorial beauty, fluid interactions, and axe-audited accessible semantics.',
     deliverables: [
       'Responsive Web App',
       'Design System Library',

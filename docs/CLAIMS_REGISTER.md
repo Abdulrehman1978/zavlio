@@ -18,3 +18,24 @@ failed in the initial pass. The database release gate remained NOT VERIFIED and 
 effects remained zero.
 
 Packet 17R resolution (Packet 17R1) adds no commercial or premature production claim. All local database release gates, pgTAP assertions (175/175), zero-lint/zero-drift contracts, unit/integration suites, and Playwright E2E tests pass locally. Hosted services (Auth, SMTP, Turnstile, external social accounts, cloud deployment) remain external dependencies; live external social side effects remain exactly zero.
+
+Packet 05R and 05R.1 (Public Trust, Content Integrity & Visual Quality) audit and reconcile all public technical, commercial, and legal claims:
+
+| Claim Description                      | Prior Assertion                                | Status       | Action      | Owner / Evidence                                                                   |
+| :------------------------------------- | :--------------------------------------------- | :----------- | :---------- | :--------------------------------------------------------------------------------- |
+| **Kinetiq Systems Bundle & FPS**       | `<8kB compressed bundle`, `60fps on mobile`    | `RETIRED`    | `REMOVED`   | Engineering: Removed empirical metric claims from public copy and SVG visual.      |
+| **Kinetiq Systems Delivery**           | Commercial client production release           | `UNVERIFIED` | `QUALIFIED` | Product: Honestly labeled as `STUDIO_CASE` (Design System Architecture blueprint). |
+| **Aurora Intelligence Enterprise SLA** | Enterprise production DAG delivery SLA         | `RETIRED`    | `REMOVED`   | Engineering: Removed unverified enterprise SLA claims.                             |
+| **Aurora Intelligence Prototype**      | Interactive supervisory DAG prototype          | `UNVERIFIED` | `QUALIFIED` | Product: Honestly labeled as `PROTOTYPE_SYSTEM`.                                   |
+| **Strata Commerce LCP Metric**         | `Sub-200ms LCP on mobile 4G`                   | `RETIRED`    | `REMOVED`   | Engineering: Removed unmeasured mobile network latency claim.                      |
+| **Strata Commerce Architecture**       | Static generation & lean edge routing          | `UNVERIFIED` | `QUALIFIED` | Engineering: Honestly labeled as `REFERENCE_IMPLEMENTATION`.                       |
+| **Vanguard Visual Architecture**       | External commercial client deployment          | `UNVERIFIED` | `QUALIFIED` | Product: Honestly labeled as `STUDIO_CASE` (Design system architecture).           |
+| **Spatial Kinematics Stack (Lab)**     | WebGL / GLSL shaders, `<3% CPU`, `60fps`       | `RETIRED`    | `REMOVED`   | Engineering: Retired speculative GLSL and fixed 60fps badge.                       |
+| **Spatial Kinematics Implementation**  | HTML5 2D Canvas parametric Lissajous           | `VERIFIED`   | `QUALIFIED` | Code: `apps/web/src/components/spatial-kinetic-artifact.tsx`.                      |
+| **Agent Graphs Trials (Lab)**          | Staging trials & empirical false-positive rate | `RETIRED`    | `REMOVED`   | Engineering: Removed fabricated staging trial statistics.                          |
+| **Accessibility Compliance**           | Formal WCAG 2.2 AA Compliance certification    | `RETIRED`    | `REMOVED`   | QA: Third-party WCAG certification does not exist.                                 |
+| **Accessibility Audit**                | Automated Axe Accessibility zero-violations    | `VERIFIED`   | `QUALIFIED` | QA: Axe automated suite reports 0 violations across tested routes and viewports.   |
+| **Global Edge Latency**                | Global sub-second edge performance             | `RETIRED`    | `REMOVED`   | Infrastructure: Global CDN latency not empirically measured across edge nodes.     |
+| **Edge Architecture**                  | Static generation & lean runtime               | `UNVERIFIED` | `QUALIFIED` | Engineering: Architecture reflects static pages and lean SSR.                      |
+| **Data Protection Officer (DPO)**      | Formal external DPO registration               | `RETIRED`    | `REMOVED`   | Legal: Removed formal DPO title; replaced with privacy contact.                    |
+| **Legal Compliance**                   | Comprehensive GDPR/DPDP certification          | `UNVERIFIED` | `QUALIFIED` | Legal: Retained honest disclaimer stating external formal legal review is pending. |

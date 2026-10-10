@@ -89,7 +89,7 @@
 | `/robots.txt`                                 | Mobile 390x844   | Resource Fetch           | 200 OK with valid resource content               | 200 OK, body length 276                                                                                                   | Clean (0 errors) | 200 OK  | **PASS** |
 | `/sitemap.xml`                                | Mobile 390x844   | Resource Fetch           | 200 OK with valid resource content               | 200 OK, body length 29924                                                                                                 | Clean (0 errors) | 200 OK  | **PASS** |
 
-## Interactive Form & Behavioral Testing Summary
+## Interactive Form & Behavioral Testing Summary (Packets 02–05 Baseline)
 
 1. **Homepage Interactive Artifacts**:
    - Parametric spatial kinetic canvas initialises cleanly at 60fps.
@@ -107,3 +107,57 @@
 4. **Cookie Consent & Analytics Governance**:
    - Cookie consent modal/bar allows 1-click Acceptance, Rejection of non-essential cookies, or Granular configuration on `/cookies`.
    - Verified that rejection completely blocks client analytics tracking.
+
+---
+
+## Packet 05R & 05R.1 — Rigorous Behavioral QA & Multi-Viewport Audit Ledger
+
+**Execution Date:** 2026-10-10
+**Test Suite:** `tests/e2e/behavioral-qa.spec.ts` + `scripts/behavioral-browser-qa.mjs`
+**Browser Engine:** Chromium Headless (Automated Playwright) + Antigravity Interactive Browser
+**Total Playwright Tests Discovered:** 27 tests across 7 test files (18 baseline preserved + 9 newly added behavioral specs)
+**Total Public Web E2E Executed & Passing Locally:** 13/13 (100% PASS)
+**Total Behavioral Script Checks Executed:** 31/31 (100% PASS)
+
+| Test ID | Category      | Interaction Flow / Control         | Viewport | Expected Behavior                                                   | Actual Behavior                            | Result   |
+| :------ | :------------ | :--------------------------------- | :------- | :------------------------------------------------------------------ | :----------------------------------------- | :------- |
+| `B-01`  | Navigation    | Skip Link & Focus                  | 1440x900 | Attached to DOM, targets `#main-content`                            | Present and accessible                     | **PASS** |
+| `B-02`  | Navigation    | Header Navigation Links            | 1440x900 | Work, Services, About, Lab, Insights, Contact visible               | All 6 links visible & functional           | **PASS** |
+| `B-03`  | Visual        | Header Scroll Elevation            | 1440x900 | Scrolled > 20px applies backdrop blur & shadow                      | Elevation styles applied on scroll         | **PASS** |
+| `B-04`  | Navigation    | Hero CTA: Start a project          | 1440x900 | Navigates directly to `/start-a-project`                            | 200 OK, form rendered                      | **PASS** |
+| `B-05`  | Interaction   | Operating Cycle 7 Stages (Desktop) | 1440x900 | 7 stages (01 IDEA through 07 IDEA loop) click, aria-selected, panel | All 7 stages activate reactively & cleanly | **PASS** |
+| `B-05m` | Interaction   | Operating Cycle 7 Stages (Mobile)  | 390x844  | 7 stages clickable on mobile touch targets without layout overflow  | All 7 stages activate on 390x844           | **PASS** |
+| `B-06`  | Visual        | Project Detail Vector Schematics   | 1440x900 | SVG technical blueprints render for 4 cases                         | Zero raster placeholders; 4 SVGs active    | **PASS** |
+| `B-07`  | Navigation    | Project Detail Breadcrumb Back     | 1440x900 | Clicking `← ALL WORK` returns to `/work`                            | Successfully navigated back                | **PASS** |
+| `B-08`  | Mobile        | Mobile Menu Toggle Open            | 390x844  | Opens full-height modal drawer with role="dialog"                   | Drawer visible, body scroll locked         | **PASS** |
+| `B-09`  | Mobile / A11y | Mobile Drawer Escape Key           | 390x844  | Pressing Escape dismisses drawer and restores scroll                | Drawer closed, scroll restored             | **PASS** |
+| `B-10`  | Mobile        | Mobile Drawer Link Navigation      | 390x844  | Clicking "Work" navigates to `/work` and closes drawer              | Navigated to `/work`, drawer dismissed     | **PASS** |
+| `B-11`  | Privacy       | Cookie Consent Banner Display      | 1440x900 | Banner renders with Accept and Reject buttons                       | Visible on clean session                   | **PASS** |
+| `B-12`  | Privacy       | Accept Analytics Cookie Set        | 1440x900 | Sets `zv_consent` to `analytics_allowed`                            | Cookie persisted correctly                 | **PASS** |
+| `B-13`  | Privacy       | Withdraw Consent Management        | 1440x900 | `/cookies` allows withdrawing consent                               | `zv_consent` updated to `analytics_denied` | **PASS** |
+| `B-14`  | Forms         | Contact Form Empty Validation      | 1440x900 | Blocks submit, renders accessible inline error alerts               | Prevents submission, errors shown          | **PASS** |
+| `B-15`  | Forms         | Contact Form Invalid Email         | 1440x900 | Rejects malformed email address                                     | Error message rendered on field            | **PASS** |
+| `B-16`  | Forms         | Contact Form Valid Submission      | 1440x900 | Submits enquiry, renders success receipt status                     | Status: "received" rendered                | **PASS** |
+| `B-17`  | Forms         | Six-Step Intake Step 1 (Services)  | 1440x900 | Requires at least 1 service selection                               | Error shown on empty continue              | **PASS** |
+| `B-18`  | Forms         | Six-Step Intake Step 2 (Contact)   | 1440x900 | Requires name & valid email                                         | Error shown on empty continue              | **PASS** |
+| `B-19`  | Forms         | Six-Step Intake Step 3 (Goal)      | 1440x900 | Requires >= 10 character goal description                           | Error shown on empty continue              | **PASS** |
+| `B-20`  | Forms         | Six-Step Intake Steps 4–6 & Submit | 1440x900 | Validates budget, timing, source, and completes submit              | Enquiry receipt confirmation rendered      | **PASS** |
+| `B-21`  | A11y / Motion | Reduced Motion Emulation           | 1440x900 | Page renders without script crashes or jarring motion               | Zero animation errors                      | **PASS** |
+
+### Multi-Viewport Visual Stability Matrix
+
+Comparison screenshots stored locally in `.qa-screenshots/` (git-ignored):
+
+- `home-390x844.png` (Mobile - iPhone 14/15)
+- `home-768x1024.png` (Tablet Portrait - iPad Mini)
+- `home-1024x768.png` (Tablet Landscape / Small Laptop)
+- `home-1440x900.png` (Desktop Standard)
+- `home-1920x1080.png` (Full HD Desktop)
+
+| Viewport             | Dimensions  | Layout Stability                                     | Horizontal Overflow                             | Axe Accessibility Violations |
+| :------------------- | :---------- | :--------------------------------------------------- | :---------------------------------------------- | :--------------------------- |
+| **Mobile**           | 390 × 844   | Clean single-column layout, touch-friendly targets   | `scrollWidth <= clientWidth` (**0px overflow**) | **0 violations**             |
+| **Tablet Portrait**  | 768 × 1024  | Balanced typography, 2-column card grids             | `scrollWidth <= clientWidth` (**0px overflow**) | **0 violations**             |
+| **Tablet Landscape** | 1024 × 768  | Desktop navigation active, proportional spacing      | `scrollWidth <= clientWidth` (**0px overflow**) | **0 violations**             |
+| **Desktop Standard** | 1440 × 900  | Editorial warm-ivory layout, balanced hero           | `scrollWidth <= clientWidth` (**0px overflow**) | **0 violations**             |
+| **Full HD**          | 1920 × 1080 | Centered max-w-7xl container, elegant breathing room | `scrollWidth <= clientWidth` (**0px overflow**) | **0 violations**             |

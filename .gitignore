@@ -18,3 +18,4 @@ Thumbs.db
 pnpm-debug.log*
 .runtime/
 external/meta-automation/
+.qa-screenshots/

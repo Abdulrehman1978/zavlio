@@ -95,7 +95,7 @@ export default function PrivacyPage() {
                   , or request deletion of your information.
                 </p>
                 <p className="text-base">
-                  To exercise any of these rights, contact our data privacy officer at{' '}
+                  To exercise any of these rights, contact our privacy contact at{' '}
                   <a href="mailto:hello@zavlio.online" className="text-[#0D0D0D] underline">
                     hello@zavlio.online
                   </a>
@@ -106,7 +106,7 @@ export default function PrivacyPage() {
               <div className="border-t border-[#D8D4CA] pt-6 text-xs font-mono text-[#646059]">
                 <span>
                   Notice: This operational policy reflects current system behavior. Formal legal
-                  review remains documented in platform governance records.
+                  compliance review remains outstanding.
                 </span>
               </div>
             </div>

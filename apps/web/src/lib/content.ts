@@ -48,72 +48,72 @@ export const PROJECTS: ProjectItem[] = [
   {
     slug: 'kinetiq-systems',
     title: 'Kinetiq Systems',
-    client: 'Internal Studio Lab',
+    client: 'Internal Studio Study',
     type: 'Design System & Motion Architecture',
     year: '2026',
     disciplines: ['Design Systems', 'Motion Engineering', 'Frontend Architecture'],
     summary:
-      'A multi-platform component language combining mathematical spring physics, container queries, and strict WCAG 2.2 AA accessibility.',
+      'A modular component language exploring token-based layout architecture, mathematical motion curves, and semantic keyboard accessibility.',
     challenge:
       'Modern web interfaces frequently suffer from disconnected animations, bloated third-party motion libraries, and poor mobile performance.',
     approach:
-      'Engineered a deterministic token-based layout and animation runtime that respects user motion preferences while maintaining 60fps frame budgets across desktop and handheld viewports.',
+      'Designed a deterministic token-based layout and animation layer respecting user motion preferences with low main-thread overhead.',
     outcome:
-      'Reduced layout shifts to zero, minimized bundle footprint to under 8kB gzipped, and established a modular component foundation for complex web products.',
+      'Established a modular component foundation for complex web products, eliminating layout shift and maintaining predictable rendering.',
     tag: 'CONCEPT_ARCHITECTURE',
     featured: true,
   },
   {
     slug: 'aurora-intelligence',
     title: 'Aurora Intelligence',
-    client: 'Autonomous Systems Initiative',
+    client: 'Internal AI Research Study',
     type: 'AI Platform Interface & Agent Canvas',
     year: '2026',
     disciplines: ['AI System Design', 'Product Architecture', 'Full-Stack Engineering'],
     summary:
-      'An intuitive operator workspace for supervising autonomous agent clusters, evaluating reasoning traces, and approving critical multi-step decisions.',
+      'An exploratory operator workspace for supervising autonomous agent clusters, evaluating reasoning traces, and approving critical multi-step decisions.',
     challenge:
       'Complex multi-agent AI platforms overwhelm human reviewers with opaque log streams and fragmented telemetry.',
     approach:
-      'Designed an editorial canvas with progressive disclosure, human-in-the-loop verification gates, and real-time state visualization.',
+      'Designed an editorial canvas with progressive disclosure, human-in-the-loop verification gates, and clear state visualization.',
     outcome:
-      'Provided clear operational visibility with strict permission boundaries and zero accidental automated side effects.',
+      'Demonstrated clear supervisory visibility with strict permission boundaries and zero accidental automated side effects in prototype testing.',
     tag: 'PROTOTYPE_SYSTEM',
     featured: true,
   },
   {
     slug: 'strata-commerce',
     title: 'Strata Commerce',
-    client: 'Digital Retail Reference',
+    client: 'Digital Commerce Reference Study',
     type: 'Headless Digital Commerce',
     year: '2025',
     disciplines: ['E-Commerce Strategy', 'Design', 'Edge Engineering'],
     summary:
-      'A performance-first headless commerce architecture delivering sub-second page transitions, dynamic currency routing, and editorial merchandising.',
+      'A performance-first headless commerce reference architecture exploring composable catalogue routing, dynamic currency switching, and editorial merchandising.',
     challenge:
       'Traditional storefront templates force a trade-off between expressive editorial storytelling and checkout conversion velocity.',
     approach:
-      'Constructed a composable commerce stack with server-rendered catalogue edges, instant client navigation, and localized inventory awareness.',
+      'Constructed a composable commerce exploration with server-rendered catalogue edges, client navigation transitions, and localized inventory awareness.',
     outcome:
-      'Demonstrated sub-200ms Largest Contentful Paint (LCP) times on mobile 4G networks without compromising visual richness.',
+      'Demonstrated streamlined page delivery and responsive transitions for high-density product catalogues without visual compromise.',
     tag: 'REFERENCE_IMPLEMENTATION',
     featured: true,
   },
   {
     slug: 'vanguard-identity',
     title: 'Vanguard Visual Architecture',
-    client: 'Design Practice Study',
+    client: 'Spatial Practice Exploration',
     type: 'Brand Identity & Web Presence',
     year: '2025',
     disciplines: ['Brand Strategy', 'Visual Identity', 'Web Development'],
     summary:
-      'A restrained visual identity and digital experience for an avant-garde architectural and spatial design studio.',
+      'A restrained visual identity and digital experience exploration for an avant-garde architectural and spatial design studio.',
     challenge:
       'Expressing physical materiality, spatial scale, and structural restraint through digital browser viewports.',
     approach:
       'Used warm parchment textures, rigorous geometric grids, and high-contrast editorial typography to reflect architectural honesty.',
     outcome:
-      'An uncluttered, memorable online presence that lets architectural portfolios breathe without decorative chrome.',
+      'A clean, memorable concept study letting architectural space and structural imagery breathe without decorative chrome.',
     tag: 'STUDIO_CASE',
     featured: true,
   },
@@ -332,15 +332,15 @@ export const LAB_EXPERIMENTS: LabItem[] = [
   {
     slug: 'spatial-kinematics',
     title: 'Spatial Kinematics',
-    category: 'Motion & WebGL',
+    category: 'Motion & Canvas',
     status: 'ACTIVE_PROTOTYPE',
     description:
-      'Exploring mathematical parametric wave surfaces rendered via lightweight HTML5 Canvas and WebGL shaders, maintaining sub-3% CPU utilization.',
+      'Exploring mathematical parametric wave surfaces rendered via lightweight HTML5 2D Canvas isometric trigonometry, with off-screen pause observers and reduced-motion support.',
     hypothesis:
-      'Can dynamic 3D visual atmosphere be integrated into editorial websites without degrading mobile battery life or Core Web Vitals?',
+      'Can dynamic spatial atmosphere be integrated into editorial websites without degrading mobile battery life or Core Web Vitals?',
     findings:
-      'By deferring animation frames during inactivity, clamping device pixel ratios, and pausing off-screen contexts, interactive 3D can run at 60fps with negligible overhead.',
-    stack: ['WebGL', 'HTML5 Canvas', 'GLSL Shaders', 'TypeScript'],
+      'By pausing off-screen contexts, clamping device pixel ratios, and defaulting to static wireframes under reduced-motion, interactive mathematical surfaces run with minimal overhead.',
+    stack: ['HTML5 2D Canvas', 'Parametric Trigonometry', 'IntersectionObserver', 'TypeScript'],
   },
   {
     slug: 'agent-reasoning-graphs',
@@ -348,12 +348,12 @@ export const LAB_EXPERIMENTS: LabItem[] = [
     category: 'Autonomous AI',
     status: 'ACTIVE_PROTOTYPE',
     description:
-      'Visualizing real-time decision trees and policy validation checkpoints for multi-agent workflows executing in isolated sandboxes.',
+      'Visualizing decision trees and policy validation checkpoints for multi-agent workflows executing in isolated sandboxes.',
     hypothesis:
       'Human-in-the-loop oversight requires transparent topological visualizations rather than tabular log dumps.',
     findings:
-      'Graphical state representation increased operator review confidence and reduced false-positive job rejections in staging trials.',
-    stack: ['TypeScript', 'Directed Acyclic Graphs', 'React Flow', 'Event Streams'],
+      'Topological state representation provides transparent operator traceability for multi-stage agent validation traces.',
+    stack: ['TypeScript', 'DAG Topologies', 'Event Streams', 'Reactive Canvas'],
   },
   {
     slug: 'container-micro-typography',

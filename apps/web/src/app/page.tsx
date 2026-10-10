@@ -14,6 +14,7 @@ import { SiteHeader } from '../components/site-header';
 import { SiteFooter } from '../components/site-footer';
 import { OperatingCycle } from '../components/operating-cycle';
 import { SpatialKineticArtifact } from '../components/spatial-kinetic-artifact';
+import { ProjectVisual } from '../components/project-visual';
 import { PROJECTS, SERVICES, LAB_EXPERIMENTS, INSIGHTS } from '../lib/content';
 
 export const metadata = {
@@ -180,16 +181,7 @@ export default function HomePage() {
                       <span className="font-mono text-xs text-[#524F47]">{project.year}</span>
                     </div>
 
-                    <div className="aspect-[16/10] w-full bg-[#EAE6DC] border border-[#D8D4CA] flex items-center justify-center p-6 text-center transition-colors group-hover:bg-[#E5E0D5]">
-                      <div className="space-y-2">
-                        <span className="font-mono text-xs uppercase tracking-widest text-[#524F47] block">
-                          Case Study Presentation
-                        </span>
-                        <p className="font-serif text-xl sm:text-2xl text-[#0D0D0D]">
-                          {project.title}
-                        </p>
-                      </div>
-                    </div>
+                    <ProjectVisual slug={project.slug} />
 
                     <div className="space-y-2">
                       <h3 className="font-serif text-2xl text-[#0D0D0D]">{project.title}</h3>
@@ -278,15 +270,15 @@ export default function HomePage() {
                   </div>
                   <div className="space-y-1">
                     <span className="font-mono text-xl text-[#FAF8F4] font-semibold">
-                      WCAG 2.2 AA
+                      Axe-Audited
                     </span>
-                    <p className="text-xs text-[#A9A49A]">Accessible semantic interfaces</p>
+                    <p className="text-xs text-[#A9A49A]">Semantic accessible interfaces</p>
                   </div>
                   <div className="space-y-1">
                     <span className="font-mono text-xl text-[#FAF8F4] font-semibold">
                       Edge-Ready
                     </span>
-                    <p className="text-xs text-[#A9A49A]">Global sub-second response times</p>
+                    <p className="text-xs text-[#A9A49A]">Static generation & lean runtime</p>
                   </div>
                 </div>
               </div>

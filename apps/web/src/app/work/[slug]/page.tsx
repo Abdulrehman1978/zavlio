@@ -14,6 +14,7 @@ import {
 } from '@zavlio/ui';
 import { SiteHeader } from '../../../components/site-header';
 import { SiteFooter } from '../../../components/site-footer';
+import { ProjectVisual } from '../../../components/project-visual';
 import { PROJECTS } from '../../../lib/content';
 
 export function generateStaticParams() {
@@ -97,17 +98,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         {/* Big Media Showcase Frame */}
         <Section spacing="compact" className="bg-[#FAF8F4] border-b border-[#D8D4CA]/60">
           <Container>
-            <div className="w-full aspect-[21/9] bg-[#EAE6DC] border border-[#D8D4CA] flex items-center justify-center p-8 text-center">
-              <div className="space-y-3">
-                <span className="font-mono text-xs uppercase tracking-widest text-[#524F47] block">
-                  Interactive Architectural Showcase
-                </span>
-                <p className="font-serif text-2xl sm:text-4xl text-[#0D0D0D]">{project.title}</p>
-                <span className="font-mono text-xs text-[#646059] block">
-                  {project.client} · Verified Reference Build
-                </span>
-              </div>
-            </div>
+            <ProjectVisual slug={project.slug} aspect="showcase" />
           </Container>
         </Section>
 
@@ -142,7 +133,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
         <Section spacing="default" className="bg-[#FAF8F4] border-b border-[#D8D4CA]/60">
           <Container>
             <div className="max-w-3xl space-y-6">
-              <Eyebrow>03 · VERIFIED OUTCOME</Eyebrow>
+              <Eyebrow>03 · PROJECT DELIVERABLES & OUTCOME</Eyebrow>
               <SectionHeading as="h2" serif>
                 Technical deliverables & results.
               </SectionHeading>
@@ -151,8 +142,8 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
                   {project.outcome}
                 </p>
                 <div className="pt-4 border-t border-[#D8D4CA] flex items-center justify-between text-xs font-mono text-[#646059]">
-                  <span>Status: Fully Verified</span>
-                  <span>Compliance: WCAG 2.2 AA</span>
+                  <span>Classification: {project.tag.replace('_', ' ')}</span>
+                  <span>Accessibility: Axe-Audited Semantics</span>
                 </div>
               </Card>
             </div>

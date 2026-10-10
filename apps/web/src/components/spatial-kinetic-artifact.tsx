@@ -214,7 +214,7 @@ export function SpatialKineticArtifact({
       <canvas ref={canvasRef} className="h-full w-full block" />
       <div className="absolute bottom-3 left-4 flex items-center gap-2 font-mono text-[10px] tracking-wider uppercase text-[#646059]">
         <span className="h-1.5 w-1.5 rounded-full bg-[#D8FF45] border border-[#0D0D0D]" />
-        <span>Kinetic Spatial System · 60fps</span>
+        <span>Kinetic Spatial System · Interactive Canvas</span>
       </div>
     </div>
   );

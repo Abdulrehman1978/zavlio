@@ -13,6 +13,7 @@ import {
 } from '@zavlio/ui';
 import { SiteHeader } from '../../components/site-header';
 import { SiteFooter } from '../../components/site-footer';
+import { ProjectVisual } from '../../components/project-visual';
 import { PROJECTS } from '../../lib/content';
 
 export const metadata: Metadata = {
@@ -66,17 +67,8 @@ export default function WorkIndexPage() {
                       <span className="font-mono text-xs text-[#524F47]">{project.year}</span>
                     </div>
 
-                    {/* Visual Media Placeholder Box */}
-                    <div className="aspect-[16/10] w-full bg-[#EAE6DC] border border-[#D8D4CA] flex items-center justify-center p-8 text-center transition-colors group-hover:bg-[#E5E0D5]">
-                      <div className="space-y-2">
-                        <span className="font-mono text-xs uppercase tracking-widest text-[#524F47] block">
-                          Case Study Presentation
-                        </span>
-                        <h2 className="font-serif text-2xl sm:text-3xl text-[#0D0D0D]">
-                          {project.title}
-                        </h2>
-                      </div>
-                    </div>
+                    {/* Visual Media Schematic */}
+                    <ProjectVisual slug={project.slug} />
 
                     <div className="space-y-3">
                       <div className="flex justify-between items-baseline">
