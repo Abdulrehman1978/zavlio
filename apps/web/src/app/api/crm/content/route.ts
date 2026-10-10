@@ -3,6 +3,9 @@ import { revalidatePath } from 'next/cache';
 import { contentItemCreateSchema, contentItemUpdateSchema } from '@zavlio/validation';
 import { requireMinimumRole } from '../../../../lib/auth/guards';
 import { createServerSupabaseClient } from '../../../../lib/supabase/server';
+import { createAdminDatabaseClient } from '@zavlio/db/admin';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import type { Database } from '@zavlio/db/database.types';
 
 function triggerRevalidation(table: string, slug: string) {
   try {
@@ -37,7 +40,12 @@ export async function POST(request: Request) {
       ? contentItemUpdateSchema.parse(json)
       : contentItemCreateSchema.parse(json);
 
-    const db = await createServerSupabaseClient();
+    let db: SupabaseClient<Database>;
+    try {
+      db = createAdminDatabaseClient();
+    } catch {
+      db = await createServerSupabaseClient();
+    }
     const table = body.type;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const tableQuery = (db as any).from(table);
