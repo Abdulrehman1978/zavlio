@@ -172,6 +172,50 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
       </main>
 
       <SiteFooter />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@graph': [
+              {
+                '@type': 'CreativeWork',
+                name: project.title,
+                description: project.summary,
+                creator: {
+                  '@type': 'Organization',
+                  name: 'Zavlio',
+                  url: 'https://zavlio.online',
+                },
+                keywords: project.disciplines.join(', '),
+              },
+              {
+                '@type': 'BreadcrumbList',
+                itemListElement: [
+                  {
+                    '@type': 'ListItem',
+                    position: 1,
+                    name: 'Home',
+                    item: 'https://zavlio.online',
+                  },
+                  {
+                    '@type': 'ListItem',
+                    position: 2,
+                    name: 'Work',
+                    item: 'https://zavlio.online/work',
+                  },
+                  {
+                    '@type': 'ListItem',
+                    position: 3,
+                    name: project.title,
+                    item: `https://zavlio.online/work/${project.slug}`,
+                  },
+                ],
+              },
+            ],
+          }),
+        }}
+      />
     </div>
   );
 }

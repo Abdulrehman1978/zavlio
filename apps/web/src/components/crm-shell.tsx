@@ -9,11 +9,16 @@ const links = [
   ['Pipeline', '/crm/pipeline', true],
   ['Tasks', '/crm/tasks', true],
   ['Conversations', '/crm/conversations', true],
-  ['Social settings', '/crm/settings/social', true],
+  ['Campaigns', '/crm/campaigns', true],
+  ['Content', '/crm/content', true],
+  ['Consent & Privacy', '/crm/consent', true],
   ['Analytics', '/crm/analytics', true],
   ['Automation', '/crm/automation', true],
+  ['Audit logs', '/crm/audit', true],
+  ['Settings', '/crm/settings', true],
   ['Staff settings', '/crm/settings/staff', true],
   ['Lead scoring', '/crm/settings/lead-scoring', true],
+  ['Social settings', '/crm/settings/social', true],
 ] as const;
 
 export function CrmShell({ children, role }: Readonly<{ children: ReactNode; role: StaffRole }>) {
@@ -41,6 +46,7 @@ export function CrmShell({ children, role }: Readonly<{ children: ReactNode; rol
               ([, href]) =>
                 href !== '/crm/settings/lead-scoring' || role === 'ADMIN' || role === 'OWNER',
             )
+            .filter(([, href]) => href !== '/crm/audit' || role === 'ADMIN' || role === 'OWNER')
             .map(([label, href, implemented]) =>
               implemented ? (
                 <a key={href} href={href}>

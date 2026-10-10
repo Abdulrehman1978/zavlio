@@ -470,6 +470,31 @@ export default function HomePage() {
       </main>
 
       <SiteFooter />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@graph': [
+              {
+                '@type': 'Organization',
+                '@id': 'https://zavlio.online/#organization',
+                name: 'Zavlio',
+                url: 'https://zavlio.online',
+                description:
+                  'We build brands, products and digital systems that move businesses forward.',
+              },
+              {
+                '@type': 'WebSite',
+                '@id': 'https://zavlio.online/#website',
+                url: 'https://zavlio.online',
+                name: 'Zavlio',
+                publisher: { '@id': 'https://zavlio.online/#organization' },
+              },
+            ],
+          }),
+        }}
+      />
     </div>
   );
 }

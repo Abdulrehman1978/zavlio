@@ -78,3 +78,64 @@ export const taskUpdateSchema = taskCreateSchema
     expectedUpdatedAt: z.iso.datetime({ offset: true }),
     status: z.enum(['OPEN', 'IN_PROGRESS', 'COMPLETED', 'CANCELLED']),
   });
+
+export const contentItemCreateSchema = z.object({
+  type: z.enum(['services', 'projects', 'lab_projects', 'insights']),
+  title: z.string().trim().min(1).max(200),
+  slug: z
+    .string()
+    .trim()
+    .min(1)
+    .max(120)
+    .regex(/^[a-z0-9-]+$/, 'Slug must be lowercase alphanumeric with hyphens'),
+  summary: z.string().trim().max(2000).optional().nullable(),
+  status: z.enum(['DRAFT', 'PUBLISHED', 'ARCHIVED']).default('DRAFT'),
+  visibility: z.enum(['PUBLIC', 'INTERNAL']).default('PUBLIC'),
+  claimStatus: z.enum(['DEMO', 'UNVERIFIED', 'VERIFIED', 'RETIRED']).optional().nullable(),
+  demoContent: z.boolean().default(false),
+  seoTitle: z.string().trim().max(160).optional().nullable(),
+  seoDescription: z.string().trim().max(300).optional().nullable(),
+});
+
+export const contentItemUpdateSchema = contentItemCreateSchema.extend({
+  id: z.uuid(),
+});
+
+export const campaignCreateSchema = z.object({
+  name: z.string().trim().min(1).max(200),
+  type: z.enum([
+    'OUTREACH_MANUAL',
+    'CONTENT_PROMOTION',
+    'RESEARCH_COHORT',
+    'EVENT_INVITATION',
+    'PARTNERSHIP',
+  ]),
+  status: z.enum(['DRAFT', 'ACTIVE', 'PAUSED', 'COMPLETED', 'ARCHIVED']).default('DRAFT'),
+  startsAt: z.iso.datetime({ offset: true }).optional().nullable(),
+  endsAt: z.iso.datetime({ offset: true }).optional().nullable(),
+  audienceDefinition: z.record(z.string(), z.unknown()).default({}),
+});
+
+export const campaignUpdateSchema = campaignCreateSchema.extend({
+  id: z.uuid(),
+});
+
+export const campaignMemberAddSchema = z.object({
+  campaignId: z.uuid(),
+  personId: z.uuid(),
+  status: z
+    .enum(['ADDED', 'CONTACTED', 'RESPONDED', 'QUALIFIED', 'OPTED_OUT', 'EXCLUDED'])
+    .default('ADDED'),
+});
+
+export const privacyRequestCreateSchema = z.object({
+  personId: z.uuid(),
+  requestType: z.enum(['EXPORT', 'CORRECTION', 'ANONYMIZATION']),
+  verifiedIdentity: z
+    .boolean()
+    .refine(
+      (val) => val === true,
+      'Identity verification is required before initiating a privacy request',
+    ),
+  notes: z.string().trim().max(1000).optional().nullable(),
+});
