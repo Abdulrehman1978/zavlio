@@ -132,20 +132,20 @@ test('CMS Lifecycle: Operator draft -> Unauthorized publish denied -> Admin publ
   await expect(page.getByRole('heading', { name: 'Content workspace' })).toBeVisible();
 
   // Open creation modal
-  await page.getByRole('button', { name: '+ New Item' }).click();
-  await expect(page.getByRole('heading', { name: 'New insights' })).toBeVisible();
+  await page.getByRole('button', { name: /\+ Create new/i }).click();
+  await expect(page.getByRole('heading', { name: /New insight/i })).toBeVisible();
 
   // Fill in content fields as DRAFT
   await page.getByLabel('Title *').fill('Deterministic Control Planes in 2026');
-  await page.getByLabel('URL Slug *').fill(articleSlug);
+  await page.getByLabel(/Slug/i).fill(articleSlug);
   await page
-    .getByLabel('Summary / Abstract')
+    .getByLabel(/Summary/i)
     .fill('Evaluating supervised machine execution and audit invariants.');
-  await page.getByLabel('Publication Status *').selectOption('DRAFT');
+  await page.getByLabel(/Lifecycle Status/i).selectOption('DRAFT');
 
   // Operator submits draft
-  await page.getByRole('button', { name: 'Save Content' }).click();
-  await expect(page.getByText('Content item saved successfully.')).toBeVisible();
+  await page.getByRole('button', { name: 'Create Item' }).click();
+  await expect(page.getByText(/saved successfully/i)).toBeVisible();
 
   // Verify it appears in CRM table with DRAFT badge
   await page.goto('/crm/content?type=insights');
@@ -170,32 +170,34 @@ test('CMS Lifecycle: Operator draft -> Unauthorized publish denied -> Admin publ
   // 3. UNAUTHORIZED PUBLICATION ATTEMPT BY OPERATOR IS DENIED
   // -------------------------------------------------------------------------
   await signInAs(page, operator, '/crm/content?type=insights');
-  // Find article row and click Edit
-  const articleRow = page.locator('tr', { hasText: 'Deterministic Control Planes in 2026' });
-  await articleRow.getByRole('button', { name: 'Edit' }).click();
+  await page.getByRole('button', { name: `Edit ${articleSlug}` }).click();
 
-  // Try to set status to PUBLISHED as operator
-  await page.getByLabel('Publication Status *').selectOption('PUBLISHED');
-  await page.getByRole('button', { name: 'Update Content' }).click();
+  // Verify UI denial: PUBLISHED option is disabled for OPERATOR
+  const publishedOption = page.locator('option[value="PUBLISHED"]');
+  await expect(publishedOption).toBeDisabled();
 
-  // Verify client/API error denying operator publication
-  await expect(
-    page.getByText(
-      /Only ADMIN or OWNER roles may publish or archive content|insufficient privileges|Forbidden/i,
-    ),
-  ).toBeVisible();
+  // Verify API layer denial: direct POST with PUBLISHED status is rejected with 403
+  const deniedRes = await page.request.post('/api/crm/content', {
+    data: {
+      type: 'insights',
+      title: 'Deterministic Control Planes in 2026',
+      slug: articleSlug,
+      status: 'PUBLISHED',
+      claimStatus: 'VERIFIED',
+    },
+  });
+  expect(deniedRes.status()).toBe(403);
 
   // -------------------------------------------------------------------------
   // 4. ADMIN PUBLISHES THE ARTICLE
   // -------------------------------------------------------------------------
   await signInAs(page, admin, '/crm/content?type=insights');
-  const adminRow = page.locator('tr', { hasText: 'Deterministic Control Planes in 2026' });
-  await adminRow.getByRole('button', { name: 'Edit' }).click();
+  await page.getByRole('button', { name: `Edit ${articleSlug}` }).click();
 
-  await page.getByLabel('Publication Status *').selectOption('PUBLISHED');
-  await page.getByLabel('Claim Status').selectOption('VERIFIED');
-  await page.getByRole('button', { name: 'Update Content' }).click();
-  await expect(page.getByText('Content item saved successfully.')).toBeVisible();
+  await page.getByLabel(/Lifecycle Status/i).selectOption('PUBLISHED');
+  await page.getByLabel(/Claim Status/i).selectOption('VERIFIED');
+  await page.getByRole('button', { name: 'Update Item' }).click();
+  await expect(page.getByText(/saved successfully/i)).toBeVisible();
 
   // -------------------------------------------------------------------------
   // 5. VERIFY ARTICLE IS NOW ACCESSIBLE ON PUBLIC ROUTES
@@ -218,12 +220,11 @@ test('CMS Lifecycle: Operator draft -> Unauthorized publish denied -> Admin publ
   // 6. CONTENT UPDATE
   // -------------------------------------------------------------------------
   await signInAs(page, admin, '/crm/content?type=insights');
-  const liveRow = page.locator('tr', { hasText: 'Deterministic Control Planes in 2026' });
-  await liveRow.getByRole('button', { name: 'Edit' }).click();
+  await page.getByRole('button', { name: `Edit ${articleSlug}` }).click();
 
   await page.getByLabel('Title *').fill('Deterministic Control Planes in 2026 — Verified Study');
-  await page.getByRole('button', { name: 'Update Content' }).click();
-  await expect(page.getByText('Content item saved successfully.')).toBeVisible();
+  await page.getByRole('button', { name: 'Update Item' }).click();
+  await expect(page.getByText(/saved successfully/i)).toBeVisible();
 
   // Public route reflects update
   await page.goto(`/insights/${articleSlug}`);
@@ -235,14 +236,11 @@ test('CMS Lifecycle: Operator draft -> Unauthorized publish denied -> Admin publ
   // 7. ARCHIVE: DISAPPEARS FROM PUBLIC ROUTES
   // -------------------------------------------------------------------------
   await signInAs(page, admin, '/crm/content?type=insights');
-  const updatedRow = page.locator('tr', {
-    hasText: 'Deterministic Control Planes in 2026 — Verified Study',
-  });
-  await updatedRow.getByRole('button', { name: 'Edit' }).click();
+  await page.getByRole('button', { name: `Edit ${articleSlug}` }).click();
 
-  await page.getByLabel('Publication Status *').selectOption('ARCHIVED');
-  await page.getByRole('button', { name: 'Update Content' }).click();
-  await expect(page.getByText('Content item saved successfully.')).toBeVisible();
+  await page.getByLabel(/Lifecycle Status/i).selectOption('ARCHIVED');
+  await page.getByRole('button', { name: 'Update Item' }).click();
+  await expect(page.getByText(/saved successfully/i)).toBeVisible();
 
   // Verify removed from public listing
   await page.goto('/insights');
