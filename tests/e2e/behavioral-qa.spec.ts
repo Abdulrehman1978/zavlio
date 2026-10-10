@@ -209,9 +209,12 @@ test.describe('Packet 05R Behavioral Browser QA', () => {
     await expect(acceptBtn).toBeVisible();
     await acceptBtn.click();
 
-    const cookiesAfterAccept = await context.cookies();
-    const consentCookie = cookiesAfterAccept.find((c) => c.name === 'zv_consent');
-    expect(consentCookie?.value).toContain('analytics_allowed');
+    await expect
+      .poll(async () => {
+        const cookies = await context.cookies();
+        return cookies.find((c) => c.name === 'zv_consent')?.value;
+      })
+      .toContain('analytics_allowed');
 
     // Withdraw on /cookies
     await page.goto('/cookies');
@@ -219,9 +222,12 @@ test.describe('Packet 05R Behavioral Browser QA', () => {
     await expect(withdrawBtn).toBeVisible();
     await withdrawBtn.click();
 
-    const cookiesAfterWithdraw = await context.cookies();
-    const consentAfter = cookiesAfterWithdraw.find((c) => c.name === 'zv_consent');
-    expect(consentAfter?.value).toContain('analytics_denied');
+    await expect
+      .poll(async () => {
+        const cookies = await context.cookies();
+        return cookies.find((c) => c.name === 'zv_consent')?.value;
+      })
+      .toContain('analytics_denied');
   });
 
   test('contact form client-side validation, error states, and mock submission', async ({
