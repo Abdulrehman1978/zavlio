@@ -1,67 +1,94 @@
-# Architecture
+# System Architecture Specification
 
-## Packet 17 operational closure
+**Workspace**: `C:\zavlio`  
+**Date**: 2026-10-10  
+**Status**: Authoritative Architectural Baseline (Pre-Deployment Complete)
 
-Production deployment is provider-neutral and split into web/control plane, hosted PostgreSQL/Auth, email, Turnstile, observability, and a separately supervised local Bridge. Production configuration is validated fail-fast; live social execution remains disabled.
+---
 
-Last verified: Packet 09 (local Supabase/PostgreSQL, intake, email outbox, and browser runtime verification)
+## 1. System Overview
 
-## Implemented
+Zavlio is a high-performance, privacy-first digital experience, CRM, and lead intelligence platform. It is engineered as a TypeScript monorepo with an editorial warm-ivory public web application, an in-house Postgres-backed CRM control plane, and a strictly isolated dry-run machine automation bridge.
 
-- A pnpm workspace resolves `apps/*`, `packages/*`, and `services/*`.
-- `apps/web` is a Next.js 16 App Router application. Components are server components unless explicitly marked otherwise.
-- `/` remains a temporary server-rendered shell; `/login` is a functional invite-only login; `/crm` and `/crm/**` resolve active staff server-side and are protected by `proxy.ts` plus route guards.
-- `packages/config` owns non-secret constants, structured JSON logging, typed application errors, safe public-error conversion, and correlation ID creation. It compiles to ESM before runtime consumers start.
-- `packages/validation` owns browser-safe Zod foundation/environment schemas and opt-in integration-secret checks.
-- `packages/ui` exposes only a neutral shell primitive. It intentionally carries no design-system direction.
-- `packages/db` imports `server-only` and exposes typed Supabase browser/server and service-role admin factories. The admin factory is never browser-safe and requires `SUPABASE_SERVICE_ROLE_KEY` at call time.
-- `supabase/migrations` is the sole schema source of truth. PostgreSQL uses UUID keys, UTC `timestamptz`, `citext` email values, `numeric` money, explicit text/CHECK state machines, updated-at triggers, relational indexes, and a security-definer queue claim primitive.
-- Every app-facing public table has RLS enabled. Packet 07 adds explicit authenticated grants and role-aware policies; anon, nonstaff, and inactive staff remain denied by effective policy.
-- `supabase/seed.sql` contains only stable pipeline stages and non-secret default settings. It creates no auth users, customer records, claims, or secrets.
-- `packages/analytics` contains the browser-safe consent-aware queue, event allowlists, sanitizers, first-party cookie handling, and bounded delivery client. `packages/automation` contains the pure deterministic policy evaluator and safe dry-run executor; `packages/email` remains the outbox adapter boundary.
+```mermaid
+graph TD
+    Client[Web Browser / Visitor] -->|HTTPS| PublicApp[Next.js 16 Web Application]
+    Staff[Staff Member / Operator] -->|Auth + SSR Cookies| CRMApp[CRM Control Plane /crm/*]
 
-Packet 13 makes PostgreSQL the automation control plane: immutable policy/approval/event evidence, guarded RPC transitions, atomic leasing, and RLS-safe CRM projections. External agents remain non-authoritative clients; Packet 14 will define machine authentication.
+    subgraph Web Tier
+        PublicApp -->|Public Forms| IngestionAPI[/api/forms/*]
+        PublicApp -->|First-Party Analytics| AnalyticsAPI[/api/analytics/*]
+        CRMApp -->|Server Actions / RLS| DBClient[Supabase Authenticated Client]
+    end
 
-- `/api/analytics/consent` records append-only preference history; `/api/analytics/events` is the only public ingestion boundary. It validates origin, consent, payload size, event names, metadata, timestamps, and UUIDs before using a narrow server-only admin client and the atomic database session function.
-- `/start-a-project` and `/contact` are neutral functional shells backed by `/api/forms/start-project` and `/api/forms/contact`. Both routes share server-only orchestration: strict Zod parsing, same-origin/body/rate checks, honeypot and Turnstile verification, consent-aware visitor resolution, one security-definer intake RPC, and post-commit email outbox delivery.
-- `intake_lead_submission` is the transaction boundary for form submission, exact-email person/identity resolution, exact-domain organization matching, visitor backfill/conflict candidates, touchpoints, opportunities/tasks, score snapshots, audit records, and idempotent outbox rows. Email delivery never runs inside the transaction.
-- `services/meta-bridge` is independently compiled Node/TypeScript with validated local host/port, structured logging, `/health`, and idempotent start/clean stop behavior.
-- `external/meta-automation` is a documented `NOT_PINNED` placeholder with no upstream source.
-- Root tooling provides strict TypeScript, ESLint, Prettier, Vitest/RTL, Playwright/axe, a frozen lockfile, and GitHub Actions CI.
+    subgraph Data & Persistence Tier
+        IngestionAPI -->|Security Definer RPC| PostgresDB[(PostgreSQL 17 / Supabase)]
+        AnalyticsAPI -->|Session Atomic RPC| PostgresDB
+        DBClient -->|Role-Based Access Control| PostgresDB
+        OutboxWorker[Email Outbox Worker] -->|Poll Outbox| PostgresDB
+    end
 
-## Security boundaries implemented
+    subgraph Automation & Bridge Boundary
+        CRMApp -->|Audit / Job Queue| PostgresDB
+        PostgresDB -->|HMAC-SHA256 Signed API| Bridge[services/meta-bridge]
+        Bridge -->|Child Process IPC| PinnedUpstream[external/meta-automation]
+    end
 
-- `.env*` is ignored except `.env.example`.
-- Server environment and database entry points import `server-only`.
-- Public environment parsing returns only an explicit `NEXT_PUBLIC_*` allowlist.
-- Future secrets are optional until an integration is enabled, then checked centrally.
-- Public error conversion never exposes arbitrary internal messages or stack traces.
-- Logs are structured by timestamp, level, and component; callers must pass only safe scalar context.
+    OutboxWorker -.->|SMTP Transactional| MailpitOrSMTP[Mailpit / Zoho ZeptoMail]
+    PinnedUpstream -.->|CDP Synthetic / Dry-Run| LocalBrowser[Local Chromium / Dry-Run Only]
+```
 
-## Planned backend-first
+---
 
-Packet 06 adds the database foundation. Packet 07 adds staff auth/RBAC policies. Packet 08 adds anonymous first-party analytics. Packet 09 adds functional intake and bounded CRM linking. Packet 10 adds the first CRM workspace and safe merge. Packets 11–17 add full scoring, dashboards, queue, bridge connectivity, upstream adapter, social ingestion, and hardening.
+## 2. Monorepo Package Topology
 
-## Deferred by user
+Resolved via `pnpm` workspaces (`pnpm-workspace.yaml`):
 
-## Packet 10 CRM operations
+| Package / App        | Path                       | Responsibility                                                                         | Boundaries & Invariants                                                          |
+| :------------------- | :------------------------- | :------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------- |
+| **Web Application**  | `apps/web`                 | Next.js 16.3.8 App Router application; renders 27 public routes and 15 CRM workspaces. | Server components by default. Client components isolated to interactive inputs.  |
+| **Database Tier**    | `packages/db`              | Supabase server/browser factories; generated TypeScript contracts.                     | `server-only` import guards. Service-role admin client never exposed to browser. |
+| **CRM Domain**       | `packages/crm`             | Pure CRM scoring engine, lead normalization, pipeline invariants.                      | Zero external side effects. Deterministic logic.                                 |
+| **Analytics Engine** | `packages/analytics`       | First-party telemetry taxonomy (20 typed events), queue, sanitizers.                   | Zero raw IP / user-agent storage. Consent-gated delivery.                        |
+| **Automation Plane** | `packages/automation`      | Job policy evaluator, lease state machines, dry-run invariants.                        | Deny-by-default execution. No autonomous mass actions.                           |
+| **Configuration**    | `packages/config`          | Non-secret constants, structured JSON logging, typed application errors.               | Compiles to ESM before consumer execution.                                       |
+| **Validation**       | `packages/validation`      | Browser-safe Zod schemas for forms, environment, and API payloads.                     | Strict input parsing; strips unknown properties.                                 |
+| **Email Interface**  | `packages/email`           | Outbox adapters, email template formatting, MIME definitions.                          | Never delivers synchronously inside database transactions.                       |
+| **UI Primitives**    | `packages/ui`              | Semantic accessible container and layout primitives.                                   | Neutral primitives; styling governed by warm-ivory design tokens.                |
+| **Meta Bridge**      | `services/meta-bridge`     | Separately compiled Node/TS machine supervisor; HMAC-SHA256 protocol.                  | Isolated port (loopback); loopback health check; no DB credentials.              |
+| **Pinned Upstream**  | `external/meta-automation` | Detached checkout pinned to SHA `439c3bfaac...` and tree `e4f412b...`.                 | Strictly isolated child process; dry-run semantic primitives only.               |
 
-The CRM is server-first: guarded App Router pages call an authenticated Supabase client, keep RLS active, and pass typed bounded data to neutral UI components. People lists use the `crm_people_projection` view, allowlisted sorting, indexed bounded search, and page-size 25 pagination. Person timelines use one normalized cursor function rather than N+1 client queries. Identity review and merge actions are explicit server mutations; the `merge_people` security-definer function locks both rows, reparents relations, archives the source, and records an audit/merge history row in one transaction.
+---
 
-Packets 02–05 (design system, homepage, public routes, premium motion/3D) are `DEFERRED_BY_USER`, not failed or cancelled. The approved visual direction remains governed by `MASTER_SPEC.md`, and the temporary shell must not become the final design by accident.
+## 3. Public Web Experience Tier
 
-## Packet 11 lead operations slice
+- **Art Direction**: Bespoke warm ivory aesthetic (`#FBF9F4` base, `#171614` text, `#9E5D2A` accent). Google Fonts (`Instrument Serif` and `Inter`) loaded with `display: swap`.
+- **Route Architecture**: 27 statically generated public routes (SSG). Zero layout shift (CLS < 0.05).
+- **Kinetic Spatial Visual**: Custom HTML5 2D canvas with parametric wave simulation on homepage hero; pauses automatically via `IntersectionObserver` when scrolled offscreen; disabled if `prefers-reduced-motion` is active.
+- **Responsive Schematics**: 20+ responsive vector SVGs for architecture diagrams, case studies, and lab benchmarks. Zero stock photography or fabricated client outcomes.
+- **Operating Cycle**: 7-stage interactive operational methodology (`01_ARCHITECTURAL_DISCOVERY` to `07_CONTINUOUS_VERIFICATION`).
+- **Graceful Dynamic Fallback**: `apps/web/src/lib/content-resolver.ts` merges published database items with verified static baseline content, ensuring zero site disruption if database items are unseeded.
 
-packages/crm owns the pure scoring domain and bounded server extraction. Next.js server components render current projections through authenticated RLS clients; client components are limited to accessible mutation controls. A narrow service-only persist_lead_score RPC is the sole elevated scoring write. Opportunity and task business mutations remain authenticated RPCs with role checks, row locks, optimistic preconditions, history, and audit in PostgreSQL transactions.
+---
 
-## Packet 12 reporting slice
+## 4. PostgreSQL & Supabase Data Layer
 
-`/crm/analytics` is a dynamic staff-only Server Component with five URL-addressable tabs. Five security-invoker PostgreSQL RPCs aggregate bounded ranges under authenticated RLS; raw events and CRM records never enter chart components. RLS keeps the same active-staff predicate while using a scalar subquery for once-per-statement evaluation. Recharts is isolated to one small client renderer; exact tables and metric definitions remain authoritative. See `docs/ANALYTICS_REPORTING.md` and `docs/METRICS_DICTIONARY.md`.
+- **Authoritative Source**: 20 forward-only SQL migrations under `supabase/migrations/` (timestamps `20260927060100` through `20261001062000`).
+- **Relational Invariants**: UUID primary keys (`gen_random_uuid()`), UTC `timestamptz`, `citext` for emails, `numeric(14,2)` for financial fields, explicit text/CHECK state machines.
+- **Deny-by-Default RLS**: Row-Level Security enabled on all 39 application tables. Zero public/anon table grants.
+- **Staff RBAC Model**:
+  - `OWNER`: Full platform administration, policy activation, final-owner immutability trigger.
+  - `ADMIN`: User management (OPERATOR/VIEWER only), audit explorer, CRM configuration.
+  - `OPERATOR`: Operational CRM records (People, Organizations, Pipeline, Content drafts).
+  - `VIEWER`: Read-only operational visibility.
+- **Queue & Worker Architecture**: Security-definer `FOR UPDATE SKIP LOCKED` claim primitives with atomic leasing (`lease_expires_at`, `lease_token`) and exponential backoff retry caps.
 
-## Packet 15 adapter boundary
+---
 
-The pinned Meta Automation source runs only behind a Zavlio-owned isolated child process. The Bridge remains the policy and CRM authority; the child receives an allowlisted environment with no Packet 14 HMAC or Supabase service-role credentials, connects only to local CDP, and executes fixed dry-run semantic primitives. The upstream full runner, planner, identity graph, follow-up scheduler, browser manager, AI runtime, and local state are not part of the normal path.
+## 5. Security & Isolation Invariants
 
-# Packet 16 social integration
-
-Packet 16 adds isolated Threads, Facebook, and LinkedIn providers for bounded observation and exact target/control proof. CRM, Packet 13 policy, Packet 14 signed execution, and Packet 15R.1 adapter boundaries remain authoritative; live execution is disabled.
+1. **Secret Isolation**: Server secrets (`SUPABASE_SERVICE_ROLE_KEY`, `AUTOMATION_HMAC_SECRET`, `SMTP_PASSWORD`) are server-only. Client bundles include only `NEXT_PUBLIC_*` variables.
+2. **Machine API Signing**: Machine communication between web application and Bridge is signed using HMAC-SHA256 (`/api/internal/automation/v1/*`), incorporating timestamp, nonce, path, agent identity, and body SHA-256. Replay window: ±300 seconds.
+3. **Outbox Pattern**: Form submissions execute within an atomic database transaction (`intake_lead_submission`), writing an email outbox row. Email delivery is handled asynchronously by `scripts/email-outbox-worker.mjs`, preventing email failure from aborting lead capture.
+4. **Zero Live Social Actions**: `LIVE_EXTERNAL_EXECUTION=false` is enforced at runtime and in configuration. Instagram integration is strictly unsupported.
+5. **Content Security Policy**: Configured in `apps/web/next.config.ts` with report-only mode and strict HSTS (`max-age=31536000; includeSubDomains; preload`).

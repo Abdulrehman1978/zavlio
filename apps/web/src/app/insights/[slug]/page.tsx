@@ -22,6 +22,9 @@ export async function generateMetadata({
   return {
     title: `${insight.title} — Zavlio`,
     description: insight.excerpt,
+    alternates: {
+      canonical: `https://zavlio.online/insights/${slug}`,
+    },
     openGraph: {
       title: `${insight.title} — Zavlio`,
       description: insight.excerpt,

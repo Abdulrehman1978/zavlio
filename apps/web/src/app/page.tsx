@@ -21,6 +21,9 @@ export const metadata = {
   title: "Zavlio — Build What's Next",
   description:
     'We build brands, products and digital systems that move businesses forward. Multidisciplinary strategy, design, engineering, and growth.',
+  alternates: {
+    canonical: 'https://zavlio.online',
+  },
 };
 
 export default function HomePage() {

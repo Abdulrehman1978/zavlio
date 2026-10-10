@@ -32,6 +32,9 @@ export async function generateMetadata({
   return {
     title: `${service.title} Capability — Zavlio`,
     description: service.description,
+    alternates: {
+      canonical: `https://zavlio.online/services/${slug}`,
+    },
     openGraph: {
       title: `${service.title} — Zavlio`,
       description: service.description,

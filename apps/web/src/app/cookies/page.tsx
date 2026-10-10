@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: 'Cookie Policy & Preferences — Zavlio',
   description:
     'Detailed disclosure of cookies used on zavlio.online. Manage your first-party analytics consent preferences.',
+  alternates: {
+    canonical: 'https://zavlio.online/cookies',
+  },
   openGraph: {
     title: 'Cookie Policy & Preferences — Zavlio',
     description: 'Detailed disclosure of cookies used on zavlio.online.',

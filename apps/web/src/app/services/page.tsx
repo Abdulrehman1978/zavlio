@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: 'Capabilities & Services — Zavlio',
   description:
     'Strategy, Design, Technology, and Growth. Four tightly integrated capabilities delivering end-to-end digital excellence.',
+  alternates: {
+    canonical: 'https://zavlio.online/services',
+  },
   openGraph: {
     title: 'Capabilities & Services — Zavlio',
     description:

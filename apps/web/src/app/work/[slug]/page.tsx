@@ -33,6 +33,9 @@ export async function generateMetadata({
   return {
     title: `${project.title} — Case Study | Zavlio`,
     description: project.summary,
+    alternates: {
+      canonical: `https://zavlio.online/work/${slug}`,
+    },
     openGraph: {
       title: `${project.title} — Case Study | Zavlio`,
       description: project.summary,

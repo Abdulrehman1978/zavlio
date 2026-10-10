@@ -32,6 +32,9 @@ export async function generateMetadata({
   return {
     title: `${lab.title} — Zavlio Lab`,
     description: lab.description,
+    alternates: {
+      canonical: `https://zavlio.online/lab/${slug}`,
+    },
     openGraph: {
       title: `${lab.title} — Zavlio Lab`,
       description: lab.description,

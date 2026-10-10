@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   title: 'Zavlio Lab — Research & Prototypes',
   description:
     'Self-initiated technical experiments, WebGL spatial shaders, autonomous agent architectures, and responsive typographic systems.',
+  alternates: {
+    canonical: 'https://zavlio.online/lab',
+  },
   openGraph: {
     title: 'Zavlio Lab — Research & Prototypes',
     description:

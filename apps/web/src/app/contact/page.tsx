@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: 'Contact Zavlio — Start a Conversation',
   description:
     'Direct contact channel with the Zavlio team. Enquiries, partnerships, and studio dialogue.',
+  alternates: {
+    canonical: 'https://zavlio.online/contact',
+  },
   openGraph: {
     title: 'Contact Zavlio — Start a Conversation',
     description: 'Direct contact channel with the Zavlio team.',

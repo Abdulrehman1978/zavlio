@@ -1,8 +1,8 @@
 # Data Model
 
-## Packet 17 operational closure
+## Database Architecture & Verified Baseline
 
-The database remains PostgreSQL/RLS-first. Clean replay, generated types, pgTAP, and restore evidence are release gates; none are claimed locally while Docker is unavailable.
+The database remains PostgreSQL/RLS-first across 39 application tables and 20 forward-only migrations. Clean replay, generated types (zero drift), and 175 pgTAP assertions were fully verified in baseline CI run `38038752615` and verified locally.
 
 ## Packet 14
 

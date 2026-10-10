@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: 'Privacy Policy — Zavlio',
   description:
     'Zavlio Privacy Policy. Transparent, conservative data governance, first-party consent-gated analytics, and lead intake data handling.',
+  alternates: {
+    canonical: 'https://zavlio.online/privacy',
+  },
   openGraph: {
     title: 'Privacy Policy — Zavlio',
     description: 'Zavlio Privacy Policy. Transparent, conservative data governance.',

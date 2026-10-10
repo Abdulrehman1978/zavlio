@@ -1,89 +1,91 @@
 # Zavlio
 
-Zavlio is a modular platform for a premium public experience, first-party analytics, CRM and revenue operations, and policy-controlled automation. The repository is currently at **Packet 11 — lead intelligence and operations**; it is not production-ready.
+Zavlio is an editorial digital experience, privacy-first customer intelligence, and policy-governed automation platform engineered as a strict TypeScript monorepo.
 
-Public visual design is intentionally **DEFERRED_BY_USER**. The `/` route is a temporary structural shell and does not attempt to recreate the missing Stitch design.
+**Current State**: Final Pre-Deployment Engineering Complete (Packets 00–20 Pre-Handoff)  
+**Authoritative Specification**: `MASTER_SPEC.md` Version 2.0  
+**Repository**: `https://github.com/Abdulrehman1978/zavlio.git`
 
-## Implemented foundation
+---
 
-- pnpm workspace with `apps/*`, `packages/*`, and `services/*` boundaries.
-- Next.js 16 App Router application with strict TypeScript, React Server Components by default, Tailwind CSS, metadata, and minimal `/`, `/login`, and guarded `/crm` shells.
-- Shared configuration, validation, UI, database-boundary, analytics-boundary, automation-contract, and email-provider packages.
-- Typed public/server environment parsing with an explicit `server-only` boundary.
-- Typed application errors, structured logging, and request/correlation IDs.
-- Independent Node/TypeScript Meta Bridge health/start/stop skeleton.
-- Supabase/PostgreSQL migration foundation with deny-by-default RLS, seed-only defaults, server/admin client boundaries, an atomic automation-job claim function, and a documented generated-type contract.
-- Consent-gated anonymous first-party analytics with typed event validation, bounded browser queue/batches, first/latest attribution, atomic sessionization, and append-only preference history.
-- Functional `/start-a-project` and `/contact` intake routes with server-only Zod validation, honeypot/Turnstile boundary, idempotent transactional CRM intake, exact-email person resolution, conservative organization matching, consent-aware visitor linking, lead scores, opportunities/tasks/touchpoints, and durable email outbox delivery.
-- Server-rendered CRM people, organizations, identity review, unified timeline, DNC controls, immutable notes, and explicit transactional person merge workflows with canonical redirects and audit history.
-- Deterministic versioned lead scoring with decay, explainable history, declared/behavioral service affinity, manual and bounded CLI recalculation.
-- Server-rendered Pipeline Kanban/table, guarded opportunity transitions/history, and task workload/completion/reopen workflows with role/RLS enforcement.
-- Vitest, React Testing Library, Playwright, axe, ESLint, Prettier, and GitHub Actions CI.
+## 1. System Highlights
 
-## Requirements
+- **Editorial Public Experience**: 27 statically generated public routes (SSG) styled in bespoke warm ivory tones (`#FBF9F4` base, `#171614` text, `#9E5D2A` accent). Features a kinetic spatial canvas, an interactive 7-stage Operating Cycle, 20+ responsive SVG schematics, and zero draft leakage via `content-resolver.ts`.
+- **Comprehensive CRM Control Plane**: Complete staff workspace under `/crm` covering People, Organizations, Canonical Identity Merge, Pipeline Management, Tasks, Conversations, Content Management (`/crm/content`), Campaigns (`/crm/campaigns`), Consent & DSR (`/crm/consent`), Audit Explorer (`/crm/audit`), and Settings (`/crm/settings`).
+- **PostgreSQL & Supabase Data Architecture**: 20 forward-only migrations across 39 application tables with deny-by-default Row-Level Security (RLS) and four-tier staff RBAC (VIEWER, OPERATOR, ADMIN, OWNER).
+- **Isolated Machine Automation Bridge**: Supervised Node/TypeScript bridge (`services/meta-bridge`) with signed HMAC-SHA256 protocol, deterministic target proof, and pinned upstream (`external/meta-automation` at tree `e4f412b...`). Live social execution is strictly disabled (`LIVE_EXTERNAL_EXECUTION=false`); Instagram is unsupported.
+- **Durable Background Operations**: Asynchronous email outbox worker with exponential backoff (max 5 retries), batch lead scoring recalculator with lease checks, and sliding-window rate limiting.
 
-- Node.js `24.13.0` (pinned in `.node-version` and `package.json`)
-- pnpm `11.19.0` (pinned by `packageManager`)
-- Git
-- Docker Desktop (required for local Supabase runtime tests and migration reset evidence)
+---
 
-Enable the pinned Node version through your version manager, then let Corepack provide the pinned package manager where applicable.
+## 2. Requirements & Toolchain
 
-## Setup
+- **Node.js**: `24.13.0` (pinned in `.node-version` and `package.json`)
+- **pnpm**: `11.19.0` (pinned by `packageManager`)
+- **Next.js**: `16.3.8` (App Router)
+- **React**: `19.3.0`
+- **TypeScript**: `6.0.3` (strict type checking across all 10 packages)
+- **Supabase CLI**: `2.118.0` with PostgreSQL 17 target
+
+---
+
+## 3. Quick Start & Local Setup
 
 ```powershell
-Copy-Item .env.example .env.local
+# 1. Clone repository and install frozen dependencies
+git clone https://github.com/Abdulrehman1978/zavlio.git
+cd zavlio
 pnpm install --frozen-lockfile
+
+# 2. Configure environment
+Copy-Item .env.example .env.local
+
+# 3. Build config package and start local dev server
+pnpm dev
 ```
 
-The example environment contains no real secrets. Future integration variables remain optional until their owning packet is enabled.
+Visit `http://localhost:3000` to explore the public experience.
 
-## Commands
+---
+
+## 4. Key Verification & Operational Commands
 
 ```powershell
-pnpm dev           # Next.js development server
-pnpm build         # Production web build + Meta Bridge compilation
-pnpm lint          # ESLint with zero warnings allowed
-pnpm typecheck     # Strict workspace typecheck
-pnpm test          # Unit/smoke suite
-pnpm test:integration # Local Supabase analytics consent/session/attribution integration
-pnpm test:integration:lead-intake # Packet 09 intake, linking, idempotency, concurrency, and Mailpit runtime
-pnpm test:integration:crm # Packet 10 CRM role, merge, timeline, and intake regression
-pnpm test:integration:operations # Packet 11 scoring, pipeline, task, role, and concurrency runtime
-pnpm test:performance:operations # Disposable 1,000-record local operations evidence
-pnpm leads:recalculate -- --stale --limit 100 # Bounded lead score batch
-pnpm test:integration:lead-intake:email-failure # CRM commit/outbox failure-path runtime check
-pnpm test:e2e      # Playwright Chromium smoke + axe scan (build first)
-pnpm format        # Apply Prettier
-pnpm format:check  # Verify formatting
-pnpm audit         # High/critical dependency audit
-pnpm db:verify     # Static database-foundation verification (always runnable)
-pnpm db:start      # Start local Supabase (requires Docker)
-pnpm db:status     # Inspect local Supabase (requires Docker)
-pnpm db:reset      # Reset/apply migrations + seed (requires Docker)
-pnpm db:lint       # Supabase SQL lint (requires Docker)
-pnpm db:test       # pgTAP database tests (requires Docker)
-pnpm db:types      # Generate packages/db/src/generated/database.types.ts (requires Docker)
+# Code Quality & Tests
+pnpm lint                       # ESLint 9 with 0 warnings allowed
+pnpm typecheck                  # Strict TypeScript check across 10 packages
+pnpm test:unit                  # Run all 110 unit tests (vitest)
+pnpm build                      # Compile production web app (53 static routes)
+pnpm format:check               # Prettier format check
+pnpm security:scan              # Scan 580+ files for secrets and keys
+pnpm test:security:redaction    # Test structured-log redaction
+
+# Automated Crawl & Rehearsal Suites
+node scripts/seo-crawl-audit.mjs    # Audit all 27 public routes for SEO & canonicals
+node scripts/offline-rehearsal.mjs  # Run 11-stage offline deployment rehearsal
+
+# Integration & Adapter Runtimes
+pnpm meta:verify-pin            # Verify pinned upstream SHA & tree hashes
+pnpm test:integration:meta-adapter    # Run 44 Meta adapter invariant checks
+pnpm test:integration:social-provider # Run 31 social provider invariant checks
+
+# Database Commands (Requires local Docker)
+pnpm db:start                   # Start local Supabase container
+pnpm db:reset                   # Clean replay of 20 migrations + seed defaults
+pnpm db:lint                    # Supabase database linter
+pnpm db:test                    # Run 175 pgTAP database assertions
+pnpm db:types                   # Regenerate typed TypeScript contracts
 ```
 
-Install the browser once before local E2E execution:
+---
 
-```powershell
-pnpm exec playwright install chromium
-pnpm build
-pnpm test:e2e
-```
+## 5. Deployment Prerequisites & Operator Guides
 
-## Architecture
+All feasible non-deployment engineering is complete. For staging and production cloud rollout:
 
-- `apps/web`: deployable Next.js application.
-- `packages/config`: non-secret shared config, typed errors, logging, and request IDs.
-- `packages/validation`: browser-safe Zod schemas and environment validation.
-- `packages/ui`: deliberately minimal shell primitives; no final visual system.
-- `packages/db`: server-only Supabase client/admin factories and generated-type contract.
-- `packages/analytics`: consent-aware browser queue, event contracts, sanitizers, and bounded delivery.
-- `packages/automation`, `packages/email`: contracts only.
-- `services/meta-bridge`: independent health/logging runtime; polling begins in Packet 14.
-- `external/meta-automation`: `NOT_PINNED`; Packet 15 owns the approved upstream revision.
-
-Read `MASTER_SPEC.md`, `docs/ARCHITECTURE.md`, `docs/ENVIRONMENT.md`, `docs/DATA_MODEL.md`, `docs/EVENT_TAXONOMY.md`, `docs/PRIVACY_AND_CONSENT.md`, and `docs/PROGRESS_TRACKER.md` before implementation.
+1. **Owner Deployment Inputs**: Read [`docs/OWNER_DEPLOYMENT_INPUTS.md`](docs/OWNER_DEPLOYMENT_INPUTS.md) for exact secrets, DNS, SMTP, and Turnstile requirements.
+2. **Content Management**: Read [`docs/OPERATOR_GUIDE_CONTENT.md`](docs/OPERATOR_GUIDE_CONTENT.md).
+3. **Campaign Management**: Read [`docs/OPERATOR_GUIDE_CAMPAIGNS.md`](docs/OPERATOR_GUIDE_CAMPAIGNS.md).
+4. **Consent & Privacy (DSR)**: Read [`docs/OPERATOR_GUIDE_CONSENT.md`](docs/OPERATOR_GUIDE_CONSENT.md).
+5. **Audit Explorer**: Read [`docs/OPERATOR_GUIDE_AUDIT.md`](docs/OPERATOR_GUIDE_AUDIT.md).
+6. **Pre-Handoff Status**: Read [`docs/work/20-prehandoff-result.md`](docs/work/20-prehandoff-result.md).

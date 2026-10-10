@@ -28,6 +28,9 @@ export const metadata: Metadata = {
   title: "Zavlio — Build What's Next",
   description: 'We build brands, products and digital systems that move businesses forward.',
   metadataBase: new URL('https://zavlio.online'),
+  alternates: {
+    canonical: 'https://zavlio.online',
+  },
   openGraph: {
     title: "Zavlio — Build What's Next",
     description: 'We build brands, products and digital systems that move businesses forward.',

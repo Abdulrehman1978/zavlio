@@ -8,6 +8,9 @@ export const metadata: Metadata = {
   title: 'Start a Project — Zavlio',
   description:
     'Begin your project enquiry with Zavlio. Guided 6-step project scoping for strategy, design, technology, and growth initiatives.',
+  alternates: {
+    canonical: 'https://zavlio.online/start-a-project',
+  },
   openGraph: {
     title: 'Start a Project — Zavlio',
     description: 'Begin your project enquiry with Zavlio. Guided 6-step project scoping.',

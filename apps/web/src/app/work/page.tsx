@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   title: 'Selected Work & Case Studies — Zavlio',
   description:
     'An index of digital products, design systems, and software platforms engineered by Zavlio. Honest studio cases and reference architectures.',
+  alternates: {
+    canonical: 'https://zavlio.online/work',
+  },
   openGraph: {
     title: 'Selected Work & Case Studies — Zavlio',
     description:

@@ -98,3 +98,26 @@ Keep provider-neutral deployment, PostgreSQL queue architecture, separately supe
 - Keep three separate provider modules and a synthetic fixture provider rather than a giant platform switch.
 - Reuse existing identities/conversations/messages and add only bounded observation/settings/canary tables.
 - Keep live execution disabled and stop with PASS_WITH_EXTERNAL_DEPENDENCY when Docker or authenticated social evidence is unavailable.
+
+## Packet 17 operational closure decisions
+
+- D-0025: Implement fail-fast production environment validation enforcing non-default production secrets, rejection of demo/test credentials, Mailpit disablement, and strict loopback checks.
+- D-0026: Implement recursive structured-log redaction across all JSON logger outputs, masking keys like password, token, secret, hmac, cookie, session, api_key.
+- D-0027: Maintain isolated Bridge supervision; keep live external execution disabled (`LIVE_EXTERNAL_EXECUTION=false`) until separate canary authorization.
+
+## Packet 18 SEO, performance, and accessibility decisions
+
+- D-0028: Use Next.js `metadataBase` and explicit absolute canonical URLs across all 27 public routes.
+- D-0029: Implement structured JSON-LD schemas (Organization, Service, Article, BreadcrumbList) grounded strictly in verified source code without fabricated ratings or awards.
+- D-0030: Enforce zero draft leakage via `content-resolver.ts` with safe fallback to verified static content if database items are unseeded.
+
+## Packet 19 offline rehearsal decisions
+
+- D-0031: Package offline staging rehearsal into an automated 11-stage script (`scripts/offline-rehearsal.mjs`), validating clean build, lint, types, unit tests, secret scans, pin integrity, and simulated forward-fix/rollback procedures.
+- D-0032: Mark hosted staging rehearsal as `READY_FOR_STAGING` / `EXTERNAL_DEPENDENCY` without triggering unauthorized cloud deployments.
+
+## Packet 20 pre-handoff decisions
+
+- D-0033: Create dedicated owner deployment inputs manifest (`docs/OWNER_DEPLOYMENT_INPUTS.md`) with explicit parameter names, formats, and destinations.
+- D-0034: Create standalone operator runbooks for Content, Campaigns, Consent, and Audit.
+- D-0035: Maintain pre-handoff status as `PREDEPLOYMENT_HANDOFF_READY`, holding final signed acceptance conditional on post-deployment verification.

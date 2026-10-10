@@ -1,0 +1,397 @@
+{
+  "timestamp": "2026-10-10T13:18:54.200Z",
+  "targetDomain": "https://zavlio.online",
+  "totalAudited": 27,
+  "passed": 27,
+  "failed": 0,
+  "routes": [
+    {
+      "route": "/",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Zavlio — Build What&#x27;s Next",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 121708
+      }
+    },
+    {
+      "route": "/services",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Capabilities &amp; Services — Zavlio",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 59498
+      }
+    },
+    {
+      "route": "/services/strategy",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Strategy Capability — Zavlio",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 41902
+      }
+    },
+    {
+      "route": "/services/design",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Design Capability — Zavlio",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 41868
+      }
+    },
+    {
+      "route": "/services/technology",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Technology Capability — Zavlio",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 42039
+      }
+    },
+    {
+      "route": "/services/growth",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Growth Capability — Zavlio",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 42088
+      }
+    },
+    {
+      "route": "/work",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Selected Work &amp; Case Studies — Zavlio",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 62582
+      }
+    },
+    {
+      "route": "/work/kinetiq-systems",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Kinetiq Systems — Case Study | Zavlio",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 38132
+      }
+    },
+    {
+      "route": "/work/aurora-intelligence",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Aurora Intelligence — Case Study | Zavlio",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 39165
+      }
+    },
+    {
+      "route": "/work/strata-commerce",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Strata Commerce — Case Study | Zavlio",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 38408
+      }
+    },
+    {
+      "route": "/work/vanguard-identity",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Vanguard Visual Architecture — Case Study | Zavlio",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 37584
+      }
+    },
+    {
+      "route": "/about",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "About Zavlio — Multidisciplinary Company",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 41247
+      }
+    },
+    {
+      "route": "/lab",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Zavlio Lab — Research &amp; Prototypes",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 35165
+      }
+    },
+    {
+      "route": "/lab/spatial-kinematics",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Spatial Kinematics — Zavlio Lab",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 28790
+      }
+    },
+    {
+      "route": "/lab/agent-reasoning-graphs",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Agent Reasoning Graphs — Zavlio Lab",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 28185
+      }
+    },
+    {
+      "route": "/lab/container-micro-typography",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Container-Query Micro-Typography — Zavlio Lab",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 28472
+      }
+    },
+    {
+      "route": "/insights",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Insights &amp; Perspectives — Zavlio",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 30607
+      }
+    },
+    {
+      "route": "/insights/systems-over-frameworks",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Systems Over Frameworks: Why Enduring Digital Products Outlive Transient Trends — Zavlio",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 27569
+      }
+    },
+    {
+      "route": "/insights/restrained-motion-architecture",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "The Art of Restraint: Motion as Information, Not Noise — Zavlio",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 26859
+      }
+    },
+    {
+      "route": "/insights/first-party-analytics-sovereignty",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "First-Party Analytics &amp; Data Sovereignty: Building Trust Without Surveillance — Zavlio",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 27390
+      }
+    },
+    {
+      "route": "/contact",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Contact Zavlio — Start a Conversation",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 22752
+      }
+    },
+    {
+      "route": "/start-a-project",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Start a Project — Zavlio",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 22348
+      }
+    },
+    {
+      "route": "/privacy",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Privacy Policy — Zavlio",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 26000
+      }
+    },
+    {
+      "route": "/terms",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Terms of Service — Zavlio",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 24816
+      }
+    },
+    {
+      "route": "/cookies",
+      "status": "PASS",
+      "checks": {
+        "hasTitle": true,
+        "title": "Cookie Policy &amp; Preferences — Zavlio",
+        "hasDescription": true,
+        "hasCanonical": true,
+        "hasOgTitle": true,
+        "hasOgDescription": true,
+        "hasJsonLd": true,
+        "noLocalhostLinks": true,
+        "byteSize": 27872
+      }
+    },
+    {
+      "route": "/robots.txt",
+      "status": "PASS",
+      "checks": {
+        "hasCrmDisallow": true,
+        "hasSitemap": true
+      }
+    },
+    {
+      "route": "/sitemap.xml",
+      "status": "PASS",
+      "urlCount": 25
+    }
+  ]
+}

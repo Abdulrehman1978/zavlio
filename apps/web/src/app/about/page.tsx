@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   title: 'About Zavlio — Multidisciplinary Company',
   description:
     'Why Zavlio exists, how we work, and our philosophy on uniting strategy, design, engineering, and systems thinking.',
+  alternates: {
+    canonical: 'https://zavlio.online/about',
+  },
   openGraph: {
     title: 'About Zavlio — Multidisciplinary Company',
     description:

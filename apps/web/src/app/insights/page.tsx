@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: 'Insights & Perspectives — Zavlio',
   description:
     'Essays and notes on digital product architecture, systems engineering, editorial design, and first-party analytics from the Zavlio studio.',
+  alternates: {
+    canonical: 'https://zavlio.online/insights',
+  },
   openGraph: {
     title: 'Insights & Perspectives — Zavlio',
     description:

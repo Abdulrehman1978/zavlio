@@ -7,6 +7,9 @@ export const metadata: Metadata = {
   title: 'Terms of Service — Zavlio',
   description:
     'Zavlio Terms of Service. Operational policies, intellectual property, and service engagement guidelines.',
+  alternates: {
+    canonical: 'https://zavlio.online/terms',
+  },
   openGraph: {
     title: 'Terms of Service — Zavlio',
     description: 'Zavlio Terms of Service. Operational policies and engagement guidelines.',

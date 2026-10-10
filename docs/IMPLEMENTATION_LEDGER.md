@@ -147,3 +147,26 @@ Implemented the two public intake routes, shared server orchestration, strict sc
 - Executed the full suite: `pnpm db:reset` (20 migrations in order + seed), `pnpm db:lint` (0 schema errors), `pnpm db:types` (0 type drift), `pnpm lint` (0 warnings), `pnpm typecheck` (10 packages), `pnpm test:unit` (89 tests), `pnpm build` (production Next.js build), `pnpm security:scan` (519 files, 0 secrets), `pnpm meta:verify-pin` (pinned SHA `439c3bfaacb1caabef25a7d67c3f204916a5a168`), and all runtime integration harnesses (`meta-adapter`, `social-provider`, `reporting`, `operations`, `automation`, `analytics`, `lead-intake`, `crm`, `bridge`).
 - All 18 Playwright/axe E2E tests across 6 suites passed.
 - Database release gate promoted to `PASS_WITH_EXTERNAL_DEPENDENCY`. Source remains uncommitted (`RELEASE_SOURCE_NOT_COMMITTED`); Packet 18 remains `NOT_STARTED` and paused for user review.
+
+## 2026-10-09 — Baseline CI Verification and Public Acceptance
+
+- Pushed commit `6ab81b9d720b9abfac692ab6b7afcdd15e796b53` to `main` on `https://github.com/Abdulrehman1978/zavlio.git`.
+- GitHub Actions run `38038752615` passed both `verify` and `database` jobs:
+  - Database job: clean 20-migration replay, zero lint errors, zero type drift, 175/175 pgTAP tests passed.
+  - Verify job: 89/89 unit tests, 7/7 Meta pin checks, 27/27 Playwright E2E suites passed.
+- Public visual acceptance verified in `docs/work/05R1-acceptance.md`: warm ivory design system, 27 public routes, custom vector schematics, 7 operating stages, honest studio case labels.
+
+## 2026-10-10 — Pre-Deployment Completion Takeover (Packets 18, 19-Prep, 20-Prehandoff)
+
+- Executed pre-deployment takeover across Phases A through J:
+  - Phase A: Scope-gap reconciliation against `MASTER_SPEC.md` V2.
+  - Phase B: Delivered `apps/web/src/lib/content-resolver.ts` with zero draft leakage and graceful fallback for unseeded database content. Added `tests/unit/content.test.ts` (5 tests).
+  - Phase C: Campaign planning schemas and member validation in `tests/unit/campaigns.test.ts` (5 tests). Enforced DNC suppression badge (`EXCLUDED`) and zero mass outreach.
+  - Phase D: Consent ledger and Subject Access Request (DSR) bounded JSON export (credentials/tokens redacted). Implemented anonymization dry-run preview (`DRY_RUN_PREVIEW_ONLY`) held in `PENDING_POLICY_APPROVAL`. Added `tests/unit/consent-privacy.test.ts` (5 tests).
+  - Phase E: Recursive structured-log redaction across audit payloads. Added `tests/unit/audit.test.ts` (2 tests). Created unified settings navigation hub.
+  - Phase F: Outbox worker backoff with 5-attempt retry cap (`tests/unit/outbox-worker.test.ts`). Sliding-window rate limiter with deterministic salting (`tests/unit/rate-limiter.test.ts`). Configured CSP report-only and strict HSTS headers in `apps/web/next.config.ts`.
+  - Phase G (Packet 18): Crawled all 27 public routes via `scripts/seo-crawl-audit.mjs` (27/27 PASSED). Reconciled `docs/SEO.md`, `docs/PERFORMANCE.md`, `docs/ACCESSIBILITY.md`. Generated `docs/work/18-result.md` (PASS).
+  - Phase H: Completed `docs/ASSET_REGISTER.md`, `docs/CONTENT_ARCHITECTURE.md`, and reconciled `docs/CLAIMS_REGISTER.md`.
+  - Phase I (Packet 19): Built and executed automated rehearsal runner `scripts/offline-rehearsal.mjs` (11/11 STAGES PASSED). Generated `docs/work/19-prep-result.md` (`PREPARED_FOR_HOSTED_REHEARSAL`).
+  - Phase J (Packet 20): Created complete `docs/OWNER_DEPLOYMENT_INPUTS.md`, operator runbooks (`docs/OPERATOR_GUIDE_*.md`), `docs/work/20-prehandoff-result.md` (`PREDEPLOYMENT_HANDOFF_READY`), and reconciled all core documentation.
+- Monorepo health verified: 110/110 unit tests, 10-package typecheck clean, 0 ESLint warnings, 100% Prettier, 587 files scanned with 0 secrets.

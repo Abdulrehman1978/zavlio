@@ -114,7 +114,6 @@ async function processBatch() {
 }
 
 if (isDaemon) {
-  // eslint-disable-next-line no-constant-condition
   while (true) {
     const count = await processBatch();
     const sleepMs = count > 0 ? 1000 : 5000;

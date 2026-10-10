@@ -1,8 +1,8 @@
 # Third-Party Dependencies
 
-All JavaScript dependencies are exact-pinned in manifests and resolved by `pnpm-lock.yaml`. Key Packet 01 selections: Next.js `16.3.6`, React `19.3.0`, TypeScript `6.0.3`, Tailwind CSS `4.3.3`, Zod `4.6.5`, Vitest `5.0.2`, Playwright `1.63.0`, axe Playwright `4.13.0`, ESLint `9.39.5`, and Prettier `3.9.9`.
+All JavaScript dependencies are exact-pinned in manifests and resolved by `pnpm-lock.yaml`. Key runtime selections: Next.js `16.3.8`, React `19.3.0`, TypeScript `6.0.3`, Tailwind CSS `4.3.3`, Zod `4.6.5`, Vitest `5.0.2`, Playwright `1.63.0`, axe Playwright `4.13.0`, ESLint `9.39.5`, sharp `0.35.5`, and Prettier `3.9.9`. Exact engine pin: Node `24.13.0` and pnpm `11.19.0`.
 
-pnpm build scripts are deny-by-default except explicit `allowBuilds` entries for `esbuild` and `unrs-resolver`, required by the selected build/lint toolchain. `pnpm audit --audit-level high` reported no known vulnerabilities on 2026-09-27.
+pnpm build scripts are deny-by-default except explicit `allowBuilds` entries for `esbuild` and `unrs-resolver`, required by the selected build/lint toolchain. `pnpm audit --prod --audit-level high` reports zero known vulnerabilities for production dependencies.
 
 ESLint 9 is registry-deprecated but temporarily retained because the selected Next.js React lint plugin peer range does not support ESLint 10. Reassess as a controlled dependency update.
 
