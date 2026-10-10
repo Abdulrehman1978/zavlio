@@ -128,6 +128,12 @@ export async function POST(request: Request) {
 
       if (table === 'projects') {
         updatePayload.project_type = body.summary || null;
+      } else if (table === 'insights') {
+        updatePayload.body = {
+          abstract: body.summary || '',
+          heading: 'Core Architecture',
+          paragraphs: [body.summary || ''],
+        };
       } else {
         updatePayload.summary = body.summary || null;
       }
@@ -204,6 +210,12 @@ export async function POST(request: Request) {
 
       if (table === 'projects') {
         updatePayloadIfProject(insertPayload, body.summary);
+      } else if (table === 'insights') {
+        insertPayload.body = {
+          abstract: body.summary || '',
+          heading: 'Core Architecture',
+          paragraphs: [body.summary || ''],
+        };
       } else {
         insertPayload.summary = body.summary || null;
       }

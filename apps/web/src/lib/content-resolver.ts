@@ -304,6 +304,10 @@ export async function getResolvedInsights(
       }
 
       if (item.status === 'PUBLISHED' && item.visibility === 'PUBLIC') {
+        const abstract =
+          typeof item.body === 'object' && item.body && 'abstract' in item.body
+            ? String((item.body as Record<string, unknown>).abstract)
+            : '';
         publishedInsights.push({
           slug: item.slug,
           title: item.title,
@@ -315,8 +319,8 @@ export async function getResolvedInsights(
               })
             : '2026',
           readTime: item.read_time_minutes ? `${item.read_time_minutes} min read` : '5 min read',
-          excerpt: item.seo_description || '',
-          content: parseInsightBody(item.body, item.seo_description),
+          excerpt: abstract || item.seo_description || '',
+          content: parseInsightBody(item.body, abstract || item.seo_description),
         });
       }
     }
