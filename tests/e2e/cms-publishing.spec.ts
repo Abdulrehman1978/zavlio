@@ -174,7 +174,7 @@ test('CMS Lifecycle: Operator draft -> Unauthorized publish denied -> Admin publ
 
   // Verify UI denial: PUBLISHED option is disabled for OPERATOR
   const publishedOption = page.getByRole('dialog').locator('option[value="PUBLISHED"]');
-  await expect(publishedOption).toBeDisabled();
+  await expect(publishedOption).toHaveJSProperty('disabled', true);
 
   // Verify API layer denial: direct POST with PUBLISHED status is rejected with 403
   const deniedRes = await page.request.post('/api/crm/content', {
