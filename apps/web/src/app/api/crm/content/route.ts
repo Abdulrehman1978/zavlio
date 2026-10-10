@@ -137,10 +137,15 @@ export async function POST(request: Request) {
       if (table === 'projects') {
         updatePayload.project_type = body.summary || null;
       } else if (table === 'insights') {
+        const existingBody = (prevData?.body || {}) as Record<string, unknown>;
+        const abstract = body.summary || (existingBody.abstract as string) || '';
         updatePayload.body = {
-          abstract: body.summary || '',
-          heading: 'Core Architecture',
-          paragraphs: [body.summary || ''],
+          abstract,
+          heading: (existingBody.heading as string) || 'Core Architecture',
+          paragraphs:
+            body.summary && body.summary !== existingBody.abstract
+              ? [body.summary]
+              : (existingBody.paragraphs as string[]) || (abstract ? [abstract] : []),
         };
       } else {
         updatePayload.summary = body.summary || null;

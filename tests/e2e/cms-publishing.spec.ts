@@ -123,6 +123,9 @@ test('CMS Lifecycle: Operator draft -> Unauthorized publish denied -> Admin publ
   if (!operator || !admin) throw new Error('Missing test fixtures');
 
   const articleSlug = `e2e-control-planes-${suffix}`;
+  const articleTitle = `Deterministic Control Planes ${suffix}`;
+  const updatedTitle = `Deterministic Control Planes ${suffix} — Verified Study`;
+  const summaryText = `Evaluating supervised machine execution and audit invariants ${suffix}.`;
   createdSlugs.push(articleSlug);
 
   // -------------------------------------------------------------------------
@@ -136,11 +139,9 @@ test('CMS Lifecycle: Operator draft -> Unauthorized publish denied -> Admin publ
   await expect(page.getByRole('heading', { name: /New insight/i })).toBeVisible();
 
   // Fill in content fields as DRAFT
-  await page.getByLabel('Title *').fill('Deterministic Control Planes in 2026');
+  await page.getByLabel('Title *').fill(articleTitle);
   await page.getByLabel(/Slug/i).fill(articleSlug);
-  await page
-    .getByLabel(/Summary/i)
-    .fill('Evaluating supervised machine execution and audit invariants.');
+  await page.getByLabel(/Summary/i).fill(summaryText);
   await page.getByLabel(/Lifecycle Status/i).selectOption('DRAFT');
 
   // Operator submits draft
@@ -149,14 +150,14 @@ test('CMS Lifecycle: Operator draft -> Unauthorized publish denied -> Admin publ
 
   // Verify it appears in CRM table with DRAFT badge
   await page.goto('/crm/content?type=insights');
-  await expect(page.getByText('Deterministic Control Planes in 2026')).toBeVisible();
+  await expect(page.getByText(articleTitle)).toBeVisible();
 
   // -------------------------------------------------------------------------
   // 2. VERIFY DRAFT IS ABSENT FROM PUBLIC ROUTES
   // -------------------------------------------------------------------------
   // Check public index
   await page.goto('/insights');
-  await expect(page.getByText('Deterministic Control Planes in 2026')).toHaveCount(0);
+  await expect(page.getByText(articleTitle)).toHaveCount(0);
 
   // Check direct URL
   const draftResponse = await page.goto(`/insights/${articleSlug}`);
@@ -180,7 +181,7 @@ test('CMS Lifecycle: Operator draft -> Unauthorized publish denied -> Admin publ
   const deniedRes = await page.request.post('/api/crm/content', {
     data: {
       type: 'insights',
-      title: 'Deterministic Control Planes in 2026',
+      title: articleTitle,
       slug: articleSlug,
       status: 'PUBLISHED',
       claimStatus: 'VERIFIED',
@@ -203,15 +204,11 @@ test('CMS Lifecycle: Operator draft -> Unauthorized publish denied -> Admin publ
   // 5. VERIFY ARTICLE IS NOW ACCESSIBLE ON PUBLIC ROUTES
   // -------------------------------------------------------------------------
   await page.goto('/insights');
-  await expect(page.getByText('Deterministic Control Planes in 2026')).toBeVisible();
+  await expect(page.getByText(articleTitle)).toBeVisible();
 
   await page.goto(`/insights/${articleSlug}`);
-  await expect(
-    page.getByRole('heading', { name: 'Deterministic Control Planes in 2026' }),
-  ).toBeVisible();
-  await expect(
-    page.getByText('Evaluating supervised machine execution and audit invariants.'),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: articleTitle })).toBeVisible();
+  await expect(page.getByText(summaryText)).toBeVisible();
 
   // Accessibility check on dynamically published page
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([]);
@@ -222,15 +219,13 @@ test('CMS Lifecycle: Operator draft -> Unauthorized publish denied -> Admin publ
   await signInAs(page, admin, '/crm/content?type=insights');
   await page.getByRole('button', { name: `Edit ${articleSlug}` }).click();
 
-  await page.getByLabel('Title *').fill('Deterministic Control Planes in 2026 — Verified Study');
+  await page.getByLabel('Title *').fill(updatedTitle);
   await page.getByRole('button', { name: 'Update Item' }).click();
   await expect(page.getByText(/saved successfully/i)).toBeVisible();
 
   // Public route reflects update
   await page.goto(`/insights/${articleSlug}`);
-  await expect(
-    page.getByRole('heading', { name: 'Deterministic Control Planes in 2026 — Verified Study' }),
-  ).toBeVisible();
+  await expect(page.getByRole('heading', { name: updatedTitle })).toBeVisible();
 
   // -------------------------------------------------------------------------
   // 7. ARCHIVE: DISAPPEARS FROM PUBLIC ROUTES
@@ -244,9 +239,7 @@ test('CMS Lifecycle: Operator draft -> Unauthorized publish denied -> Admin publ
 
   // Verify removed from public listing
   await page.goto('/insights');
-  await expect(page.getByText('Deterministic Control Planes in 2026 — Verified Study')).toHaveCount(
-    0,
-  );
+  await expect(page.getByText(updatedTitle)).toHaveCount(0);
 
   // Direct URL returns 404
   const archivedResponse = await page.goto(`/insights/${articleSlug}`);

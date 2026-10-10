@@ -58,7 +58,12 @@ export async function listContentItems(
       type: table,
       title: String(raw.title || ''),
       slug: String(raw.slug || ''),
-      summary: (raw.summary || raw.project_type || null) as string | null,
+      summary: ((raw.summary as string) ||
+        (typeof raw.body === 'object' && raw.body && 'abstract' in raw.body
+          ? String((raw.body as Record<string, unknown>).abstract)
+          : null) ||
+        (raw.project_type as string) ||
+        null) as string | null,
       status: (raw.status as 'DRAFT' | 'PUBLISHED' | 'ARCHIVED') || 'DRAFT',
       visibility: (raw.visibility as 'PUBLIC' | 'INTERNAL') || 'PUBLIC',
       claim_status: (raw.claim_status as ContentItemRow['claim_status']) || null,
