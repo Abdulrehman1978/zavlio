@@ -46,7 +46,10 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
       lang="en"
       className={`${hankenGrotesk.variable} ${newsreader.variable} ${spaceGrotesk.variable}`}
     >
-      <body suppressHydrationWarning className="bg-[#F5F2EA] text-[#0D0D0D] min-h-screen">
+      <body
+        suppressHydrationWarning
+        className="bg-[#F8FAFC] text-slate-900 min-h-screen selection:bg-indigo-600 selection:text-white antialiased"
+      >
         <AnalyticsProvider
           enabled={publicEnv.NEXT_PUBLIC_ANALYTICS_ENABLED}
           debug={publicEnv.NEXT_PUBLIC_ANALYTICS_DEBUG}

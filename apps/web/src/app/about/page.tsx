@@ -31,12 +31,15 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="flex min-h-screen flex-col bg-[#F5F2EA] text-[#0D0D0D]">
+    <div className="flex min-h-screen flex-col bg-[#F8FAFC] text-slate-900">
       <SiteHeader />
 
       <main id="main-content" className="flex-1">
         {/* About Hero */}
-        <Section spacing="hero" className="border-b border-[#D8D4CA]/60">
+        <Section
+          spacing="hero"
+          className="border-b border-slate-200/70 bg-gradient-to-b from-indigo-50/40 via-white to-slate-50/80"
+        >
           <Container>
             <div className="max-w-4xl space-y-6">
               <div className="inline-flex items-center gap-3">
@@ -44,11 +47,11 @@ export default function AboutPage() {
                 <Eyebrow>PURPOSE · STANDARDS · PRACTICE</Eyebrow>
               </div>
 
-              <DisplayHeading as="h1" size="xl" serif>
+              <DisplayHeading as="h1" size="xl" serif className="text-slate-950">
                 Built to solve the fragmentation problem.
               </DisplayHeading>
 
-              <BodyCopy size="lead" className="max-w-3xl">
+              <BodyCopy size="lead" className="max-w-3xl text-slate-600 font-normal">
                 Most modern businesses hire a strategy firm to define their direction, a design
                 agency to create their identity, a software vendor to build their platform, and a
                 marketing team to drive growth. The result is almost always compromise, misaligned
@@ -59,17 +62,17 @@ export default function AboutPage() {
         </Section>
 
         {/* Why Zavlio Exists */}
-        <Section spacing="default" className="bg-[#FAF8F4] border-b border-[#D8D4CA]/60">
+        <Section spacing="default" className="bg-slate-50/50 border-b border-slate-200/70">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
               <div className="lg:col-span-5 space-y-4">
                 <Eyebrow>01 · THE THESIS</Eyebrow>
-                <SectionHeading as="h2" serif>
+                <SectionHeading as="h2" serif className="text-slate-950">
                   Integration produces superior outcomes.
                 </SectionHeading>
               </div>
 
-              <div className="lg:col-span-7 space-y-6 text-[#383530] leading-relaxed">
+              <div className="lg:col-span-7 space-y-6 text-slate-600 leading-relaxed font-normal">
                 <p className="text-base sm:text-lg">
                   Zavlio was founded on a singular conviction: when strategy, visual craft, deep
                   software engineering, and empirical growth operate as a single coordinated
@@ -91,46 +94,50 @@ export default function AboutPage() {
         </Section>
 
         {/* Core Principles */}
-        <Section spacing="default" className="border-b border-[#D8D4CA]/60">
+        <Section spacing="default" className="border-b border-slate-200/70 bg-white">
           <Container>
             <div className="max-w-2xl space-y-3 mb-12">
               <Eyebrow>02 · OPERATIONAL STANDARDS</Eyebrow>
-              <SectionHeading as="h2" serif>
+              <SectionHeading as="h2" serif className="text-slate-950">
                 Our non-negotiable principles.
               </SectionHeading>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Card className="p-8 space-y-4">
-                <span className="font-mono text-sm text-[#D8FF45] bg-[#0D0D0D] px-2.5 py-1 inline-block">
+              <Card className="p-8 space-y-4 bg-slate-50/60 hover:bg-white">
+                <span className="font-mono text-xs text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200/60 font-semibold inline-block">
                   PRINCIPLE 01
                 </span>
-                <h3 className="font-serif text-2xl text-[#0D0D0D]">Truth Over Spectacle</h3>
-                <BodyCopy>
+                <h3 className="font-sans text-2xl font-bold text-slate-900">
+                  Truth Over Spectacle
+                </h3>
+                <BodyCopy className="text-slate-600 font-normal">
                   We don’t fabricate client metrics, inflate claims, or use meaningless vanity
                   buzzwords. We communicate capability through genuine craft, transparent code, and
                   reproducible evidence.
                 </BodyCopy>
               </Card>
 
-              <Card className="p-8 space-y-4">
-                <span className="font-mono text-sm text-[#D8FF45] bg-[#0D0D0D] px-2.5 py-1 inline-block">
+              <Card className="p-8 space-y-4 bg-slate-50/60 hover:bg-white">
+                <span className="font-mono text-xs text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200/60 font-semibold inline-block">
                   PRINCIPLE 02
                 </span>
-                <h3 className="font-serif text-2xl text-[#0D0D0D]">Systems Over Frameworks</h3>
-                <BodyCopy>
+                <h3 className="font-sans text-2xl font-bold text-slate-900">
+                  Systems Over Frameworks
+                </h3>
+                <BodyCopy className="text-slate-600 font-normal">
                   Trendy frontend frameworks come and go. Relational data integrity, clean security
                   boundaries, accessible semantic markup, and resilient API contracts last for
                   decades.
                 </BodyCopy>
               </Card>
 
-              <Card className="p-8 space-y-4">
-                <span className="font-mono text-sm text-[#D8FF45] bg-[#0D0D0D] px-2.5 py-1 inline-block">
+              <Card className="p-8 space-y-4 bg-slate-50/60 hover:bg-white">
+                <span className="font-mono text-xs text-indigo-700 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200/60 font-semibold inline-block">
                   PRINCIPLE 03
                 </span>
-                <h3 className="font-serif text-2xl text-[#0D0D0D]">Restraint as Luxury</h3>
-                <BodyCopy>
+                <h3 className="font-sans text-2xl font-bold text-slate-900">Restraint as Luxury</h3>
+                <BodyCopy className="text-slate-600 font-normal">
                   We believe true digital sophistication knows when to be quiet. We use generous
                   whitespace, confident typographic hierarchy, and intentional motion rather than
                   decorative chaos.
@@ -141,14 +148,14 @@ export default function AboutPage() {
         </Section>
 
         {/* Operating Cycle Section */}
-        <Section spacing="default" className="bg-[#FAF8F4] border-b border-[#D8D4CA]/60">
+        <Section spacing="default" className="bg-slate-50/50 border-b border-slate-200/70">
           <Container>
             <div className="space-y-3 max-w-2xl mb-12 sm:mb-16">
               <Eyebrow>03 · HOW WE WORK</Eyebrow>
-              <SectionHeading as="h2" serif>
+              <SectionHeading as="h2" serif className="text-slate-950">
                 The Zavlio Operating Cycle.
               </SectionHeading>
-              <BodyCopy>
+              <BodyCopy className="text-slate-600 font-normal">
                 Our 7-stage closed-loop methodology connecting strategy, execution, and empirical
                 learning.
               </BodyCopy>
@@ -159,21 +166,21 @@ export default function AboutPage() {
         </Section>
 
         {/* Call to action */}
-        <Section spacing="default">
+        <Section spacing="default" className="bg-white">
           <Container size="narrow">
             <div className="text-center space-y-6">
               <Eyebrow>PARTNERSHIP</Eyebrow>
-              <SectionHeading as="h2" serif>
+              <SectionHeading as="h2" serif className="text-slate-950">
                 Ready to work with Zavlio?
               </SectionHeading>
-              <BodyCopy className="mx-auto max-w-lg">
+              <BodyCopy className="mx-auto max-w-lg text-slate-600 font-normal">
                 We accept a limited number of comprehensive engagements each year to ensure
                 uncompromising focus and craft.
               </BodyCopy>
               <div className="pt-2 flex justify-center gap-4">
                 <Link href="/start-a-project">
-                  <Button variant="primary" size="lg">
-                    Start a project
+                  <Button variant="accent" size="lg" className="shadow-md">
+                    Start a project →
                   </Button>
                 </Link>
                 <Link href="/contact">

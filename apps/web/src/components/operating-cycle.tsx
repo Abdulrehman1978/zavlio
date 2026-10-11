@@ -118,12 +118,12 @@ export function OperatingCycle() {
   const activeStage = CYCLE_STAGES[activeStageIndex] ?? CYCLE_STAGES[0]!;
 
   return (
-    <div className="w-full">
+    <div className="w-full space-y-8">
       {/* Horizontal / Grid Timeline Navigation */}
       <div
         role="tablist"
         aria-label="Operating cycle stages"
-        className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 border-b border-[#D8D4CA] pb-4 mb-8"
+        className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 pb-2"
       >
         {CYCLE_STAGES.map((stage, idx) => {
           const isSelected = idx === activeStageIndex;
@@ -136,24 +136,25 @@ export function OperatingCycle() {
               id={`cycle-tab-${idx}`}
               aria-controls={`cycle-panel-${idx}`}
               onClick={() => setActiveStageIndex(idx)}
-              className={`group flex flex-col items-start p-3 text-left border transition-all duration-150 cursor-pointer focus-visible:outline-2 focus-visible:outline-[#0D0D0D] ${
+              className={`group flex flex-col items-start p-4 text-left rounded-xl border transition-all duration-200 cursor-pointer focus-visible:outline-2 focus-visible:outline-indigo-600 ${
                 isSelected
-                  ? 'bg-[#0D0D0D] text-[#FAF8F4] border-[#0D0D0D]'
-                  : 'bg-[#FAF8F4] text-[#0D0D0D] border-[#D8D4CA] hover:border-[#BBB6AA] hover:bg-[#FFFFFF]'
+                  ? 'bg-slate-900 text-white border-slate-900 shadow-md transform -translate-y-0.5'
+                  : 'bg-white text-slate-800 border-slate-200/80 shadow-xs hover:border-indigo-300 hover:bg-slate-50'
               }`}
             >
-              <div className="flex items-center justify-between w-full mb-1">
+              <div className="flex items-center justify-between w-full mb-2">
                 <span
-                  className={`font-mono text-[10px] tracking-wider ${
-                    isSelected ? 'text-[#D8FF45]' : 'text-[#646059]'
+                  className={`font-mono text-[11px] font-bold tracking-wider ${
+                    isSelected ? 'text-indigo-400' : 'text-slate-600'
                   }`}
                 >
                   {stage.number}
                 </span>
                 {idx < CYCLE_STAGES.length - 1 && (
                   <span
-                    className={`text-xs ${
-                      isSelected ? 'text-[#D8FF45]' : 'text-[#BBB6AA] group-hover:text-[#0D0D0D]'
+                    aria-hidden="true"
+                    className={`text-xs transition-transform group-hover:translate-x-0.5 ${
+                      isSelected ? 'text-indigo-400' : 'text-slate-500'
                     }`}
                   >
                     →
@@ -161,15 +162,16 @@ export function OperatingCycle() {
                 )}
                 {idx === CYCLE_STAGES.length - 1 && (
                   <span
+                    aria-hidden="true"
                     className={`text-xs font-mono ${
-                      isSelected ? 'text-[#D8FF45]' : 'text-[#BBB6AA]'
+                      isSelected ? 'text-indigo-400' : 'text-slate-500'
                     }`}
                   >
                     ↺
                   </span>
                 )}
               </div>
-              <span className="font-serif text-sm font-semibold tracking-tight">{stage.name}</span>
+              <span className="font-sans text-sm font-bold tracking-tight">{stage.name}</span>
             </button>
           );
         })}
@@ -182,7 +184,10 @@ export function OperatingCycle() {
         aria-labelledby={`cycle-tab-${activeStageIndex}`}
         className="w-full"
       >
-        <Card hover={false} className="bg-[#FAF8F4] border border-[#D8D4CA] p-8 sm:p-12">
+        <Card
+          hover={false}
+          className="bg-white/95 border border-slate-200/80 rounded-2xl p-8 sm:p-12 shadow-sm"
+        >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-7 space-y-4">
               <div className="flex items-center gap-3">
@@ -190,23 +195,26 @@ export function OperatingCycle() {
                 <Eyebrow>{activeStage.subtitle}</Eyebrow>
               </div>
 
-              <h3 className="font-serif text-3xl sm:text-4xl text-[#0D0D0D] tracking-tight">
+              <h3 className="font-sans text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
                 {activeStage.name}
               </h3>
 
-              <p className="text-base sm:text-lg text-[#383530] leading-relaxed max-w-2xl">
+              <p className="text-base sm:text-lg text-slate-600 leading-relaxed max-w-2xl">
                 {activeStage.description}
               </p>
             </div>
 
-            <div className="lg:col-span-5 border-t lg:border-t-0 lg:border-l border-[#D8D4CA] pt-6 lg:pt-0 lg:pl-8 space-y-3">
-              <span className="font-mono text-xs uppercase tracking-wider text-[#646059] block mb-2">
+            <div className="lg:col-span-5 border-t lg:border-t-0 lg:border-l border-slate-200/80 pt-6 lg:pt-0 lg:pl-8 space-y-3">
+              <span className="font-mono text-xs uppercase tracking-wider text-slate-600 block mb-3 font-semibold">
                 Core Deliverables
               </span>
-              <ul className="space-y-2">
+              <ul className="space-y-2.5">
                 {activeStage.deliverables.map((item) => (
-                  <li key={item} className="flex items-center gap-2 text-sm text-[#0D0D0D]">
-                    <span className="h-1.5 w-1.5 bg-[#0D0D0D] rounded-full" />
+                  <li
+                    key={item}
+                    className="flex items-center gap-3 text-sm font-medium text-slate-800 bg-slate-50/80 px-3.5 py-2 rounded-xl border border-slate-100"
+                  >
+                    <span className="h-2 w-2 rounded-full bg-indigo-600" />
                     <span>{item}</span>
                   </li>
                 ))}

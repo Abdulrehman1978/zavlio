@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-10-10T14:13:31.377Z",
+  "timestamp": "2026-10-11T04:18:03.806Z",
   "targetDomain": "https://zavlio.online",
   "totalAudited": 27,
   "passed": 27,
@@ -17,7 +17,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 121745
+        "byteSize": 142920
       }
     },
     {
@@ -32,7 +32,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 59587
+        "byteSize": 69565
       }
     },
     {
@@ -47,7 +47,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 41988
+        "byteSize": 48161
       }
     },
     {
@@ -62,7 +62,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 41954
+        "byteSize": 48127
       }
     },
     {
@@ -77,7 +77,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 42125
+        "byteSize": 48298
       }
     },
     {
@@ -92,7 +92,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 42174
+        "byteSize": 48360
       }
     },
     {
@@ -107,7 +107,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 62762
+        "byteSize": 70919
       }
     },
     {
@@ -122,7 +122,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 38261
+        "byteSize": 42834
       }
     },
     {
@@ -137,7 +137,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 39294
+        "byteSize": 43215
       }
     },
     {
@@ -152,7 +152,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 38537
+        "byteSize": 42439
       }
     },
     {
@@ -167,7 +167,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 37713
+        "byteSize": 41657
       }
     },
     {
@@ -182,7 +182,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 41247
+        "byteSize": 46530
       }
     },
     {
@@ -197,7 +197,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 35172
+        "byteSize": 40113
       }
     },
     {
@@ -212,7 +212,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 28876
+        "byteSize": 32633
       }
     },
     {
@@ -227,7 +227,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 28271
+        "byteSize": 32028
       }
     },
     {
@@ -242,7 +242,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 28558
+        "byteSize": 32241
       }
     },
     {
@@ -257,7 +257,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 30666
+        "byteSize": 33940
       }
     },
     {
@@ -272,7 +272,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 27655
+        "byteSize": 30016
       }
     },
     {
@@ -287,7 +287,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 26945
+        "byteSize": 29276
       }
     },
     {
@@ -302,7 +302,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 27476
+        "byteSize": 29807
       }
     },
     {
@@ -317,7 +317,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 22752
+        "byteSize": 24860
       }
     },
     {
@@ -332,7 +332,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 22348
+        "byteSize": 24399
       }
     },
     {
@@ -347,7 +347,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 26000
+        "byteSize": 28307
       }
     },
     {
@@ -362,7 +362,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 24816
+        "byteSize": 26950
       }
     },
     {
@@ -377,7 +377,7 @@
         "hasOgDescription": true,
         "hasJsonLd": true,
         "noLocalhostLinks": true,
-        "byteSize": 27872
+        "byteSize": 30721
       }
     },
     {
